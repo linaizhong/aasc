@@ -53,16 +53,8 @@ my @VALID_SP_SOFTWARE_TYPES = ( 'shibboleth' );
 # A list of valid values for the web server software type.
 my @VALID_WEB_SERVER_SOFTWARE_TYPES = ( 'apache' );
 
-# TODO: Allow this to be read from stdin.
-#my $puppet_dir = '/opt/puppet-aaf';
-my $puppet_dir = '/root/bootstrap/puppet';
-
-# 
-my $puppet_manifest_config_file = '/root/bootstrap/puppet/manifests/tags/config.pp';
-
 # Location where the script will pull down configs to and run them (temporarily).
-my $DEFAULT_WORKING_DIR = '/tmp';
-
+my $DEFAULT_WORKING_DIR = '/tmp/automatesp';
 
 # Get the hostname of the system to use in default values later.
 my $hostname = `hostname`;
@@ -77,8 +69,6 @@ my $default_entity_id = "https://$hostname/shibboleth";
 
 # Use a completely separate Puppet var directory so we don't clobber existing Puppet installs. 
 my $puppet_var_dir = '/var/lib/puppet-aaf';
-
-my $puppet_command = "puppet apply --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
 
 my $operating_system_name = '';
 my $operating_system_release = '';
@@ -104,9 +94,16 @@ if ($< != 0) {
 	exit($EXIT_FAILURE);
 } # End if.
 
+# Rejig working directory.
+print("\$working_dir:$working_dir:\n");
+
 # If working directory does not exist, create it.
 if (! -e $working_dir) {
 	mkpath([$working_dir],1,0700);
+} else {
+	my $command = "rm -rf $working_dir/*";
+	my $stdout = `$command`;
+	my $return = $?;
 } # End if.
 
 # Check that environment type is valid.
@@ -206,11 +203,33 @@ foreach my $package_to_install (sort(@packages_to_install)) {
 	} # End if.
 } # End foreach.
 
-# . Download manifest.
-# download from git
+# Download Puppet manifests
+my $command;
+my $stdout;
+my $return;
+# Clone from git.
+$command = "cd $working_dir && git clone git\@github.com:ausaccessfed/automatesp.git";
+$stdout = `$command`;
+$return = $?;
+if ($return != 0) {
+	printf("ERROR: Error running command '$command'. Return code '$return'.\n");
+	exit($EXIT_FAILURE);
+} # End if.
+
+# Clean up git metadata files.
+$command = "cd $working_dir/automatesp && rm -rf .git"; 
+$stdout = `$command`;
+$return = $?;
+if ($return != 0) {
+	printf("ERROR: Error running command '$command'. Return code '$return'.\n");
+	exit($EXIT_FAILURE);
+} # End if.
+
+# Full path to the Puppet config to edit in place so we can feed user parameters into the Puppet configuration.
+my $puppet_manifest_config_file = "$working_dir/automatesp/puppet/manifests/tags/config.pp";
 
 # Read Puppet manifest config file and munge.
-open(FP, $puppet_manifest_config_file) || die("ERROR: Could not open Puppet config.pp for reading.\n");
+open(FP, $puppet_manifest_config_file) || die("ERROR: Could not open '$puppet_manifest_config_file' for reading.\n");
 my @lines = <FP>;
 close(FP);
 for (my $i = 0; $i < scalar(@lines); $i++) {
@@ -222,19 +241,17 @@ for (my $i = 0; $i < scalar(@lines); $i++) {
 } # End for.
 
 # Pass in user specified parameters to Puppet manifests.
-open(FP, "> $puppet_manifest_config_file") || die("ERROR: Could not open Puppet config.pp for writing.\n");
+open(FP, "> $puppet_manifest_config_file") || die("ERROR: Could not open '$puppet_manifest_config_file' for writing.\n");
 foreach (@lines) {
 	print(FP "$_");
 } # End foreach.
 close(FP);
-exit(0);
 
-
-# Apply manifests.
-# run puppet on git manifests
-my $command = $puppet_command;
-my $stdout = `$command`;
-my $return = $?;
+# Run puppet on downloaded manifests.
+my $puppet_dir = "$working_dir/automatesp/puppet";
+$command = "puppet apply --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
+$stdout = `$command`;
+$return = $?;
 if ($return != 0) {
 	printf("ERROR: Puppet command failed.  Return code '$return'.\n");
 	exit($EXIT_FAILURE);
