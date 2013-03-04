@@ -94,9 +94,6 @@ if ($< != 0) {
 	exit($EXIT_FAILURE);
 } # End if.
 
-# Rejig working directory.
-print("\$working_dir:$working_dir:\n");
-
 # If working directory does not exist, create it.
 if (! -e $working_dir) {
 	mkpath([$working_dir],1,0700);
@@ -259,6 +256,11 @@ if ($return != 0) {
 
 print("$command\n");
 print("$stdout\n");
+
+# Clean up
+# $working dir
+# $puppet_var_dir
+
 
 # Display program usage to standard error.
 sub usage {
