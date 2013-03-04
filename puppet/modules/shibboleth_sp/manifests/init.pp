@@ -28,10 +28,11 @@ class shibboleth_sp {
 
 		# Generate SSL cert.
 		exec { "clean-default-shib-ssl-cert":
-			cwd     => "/etc/shibboleth",
-			path    => ["/bin"],
-			command => "rm -f /etc/shibboleth/sp-cert.pem",
-			require => Package["shibboleth"],
+			cwd         => "/etc/shibboleth",
+			path        => ["/bin"],
+			command     => "rm -f /etc/shibboleth/sp-cert.pem",
+			refreshonly => true
+			require     => Package["shibboleth"],
 		} # End exec.
 
 		# Generate SSL cert.
