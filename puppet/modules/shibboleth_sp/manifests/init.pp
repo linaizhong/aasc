@@ -23,7 +23,7 @@ class shibboleth_sp {
 		# Generate SSL cert.
 		exec { "shib-ssl-cert":
 			cwd     => "/etc/shibboleth",
-			path    => ["/bin"],
+			path    => ["/etc/shibboleth", "/bin"],
 			command => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
 			require => Package["shibboleth"],
 		} # End exec.

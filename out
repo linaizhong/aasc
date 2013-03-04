@@ -79,25 +79,25 @@ Debug: Using settings: adding file resource 'rundir': 'File[/var/run/puppet]{:li
 Debug: Using settings: adding file resource 'privatedir': 'File[/var/lib/puppet-aaf/ssl/private]{:links=>:follow, :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/ssl/private", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'statefile': 'File[/var/lib/puppet-aaf/state/state.yaml]{:links=>:follow, :ensure=>:file, :backup=>false, :mode=>"660", :path=>"/var/lib/puppet-aaf/state/state.yaml", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'clientbucketdir': 'File[/var/lib/puppet-aaf/clientbucket]{:links=>:follow, :ensure=>:directory, :backup=>false, :mode=>"750", :path=>"/var/lib/puppet-aaf/clientbucket", :loglevel=>:debug}'
-Debug: /File[/var/lib/puppet-aaf/ssl/private]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
 Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
 Debug: /File[/var/lib/puppet-aaf/ssl]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/private]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
 Debug: /File[/tmp/automatesp/automatesp/puppet/lib]/ensure: created
-Debug: Finishing transaction 70354075719700
+Debug: Finishing transaction 70141972901820
 Debug: Loaded state in 0.00 seconds
 Debug: Loaded state in 0.00 seconds
-Info: Applying configuration version '1362369654'
+Info: Applying configuration version '1362369982'
 Debug: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/require: requires Package[shibboleth]
 Debug: /Stage[main]/Apache_web_server/Service[httpd]/require: requires Package[httpd]
 Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]/require: requires File[/etc/yum.repos.d/security-shibboleth.repo]
@@ -112,18 +112,13 @@ Debug: Executing '/bin/rpm -qa --nosignature --nodigest --qf '%{NAME} %|EPOCH?{%
 Debug: Executing '/sbin/service httpd status'
 Debug: Executing '/sbin/chkconfig httpd'
 Debug: /Schedule[weekly]: Skipping device resources because running on a host
-Debug: Exec[shib-ssl-cert](provider=posix): Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
-Debug: Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
-Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: ./keygen.sh: line 23: rm: command not found
-Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: The files ./sp-key.pem and/or ./sp-cert.pem already exist!
-Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: Use -f option to force recreation of keypair.
 Debug: /Schedule[puppet]: Skipping device resources because running on a host
-Debug: Finishing transaction 70354075776580
+Debug: Finishing transaction 70141972957180
 Debug: Storing state
-Debug: Stored state in 0.02 seconds
-Notice: Finished catalog run in 0.27 seconds
+Debug: Stored state in 0.01 seconds
+Notice: Finished catalog run in 0.19 seconds
 Debug: Using settings: adding file resource 'rrddir': 'File[/var/lib/puppet-aaf/rrd]{:links=>:follow, :group=>"puppet", :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/rrd", :loglevel=>:debug}'
-Debug: Finishing transaction 70354086297880
+Debug: Finishing transaction 70141983484020
 Debug: Received report to process from auto-sp.paulstepowski.org
 Debug: Processing report from auto-sp.paulstepowski.org with processor Puppet::Reports::Store
 
