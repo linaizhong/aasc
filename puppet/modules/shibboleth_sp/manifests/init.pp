@@ -35,6 +35,15 @@ class shibboleth_sp {
 			require => Package["shibboleth"],
 		} # End exec.
 
+		# Download AAF metadata document.
+		exec { "initialise-aaf-metadata-document":
+			cwd     => "/etc/shibboleth",
+			path    => ["/bin", "/usr/bin"],
+			command => "wget $AAF_METADATA_CERTIFICATE_URL -O /etc/shibboleth/aaf-metadata-cert.pem"
+			refreshonly => true,
+			require => Package["shibboleth"],
+		} # End exec.
+
 		# Service provider configuration file.
 		file { "/etc/shibboleth2.xml":
 			owner   => root,
