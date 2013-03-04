@@ -30,7 +30,7 @@ class shibboleth_sp {
 		exec { "clean-default-shib-ssl-cert":
 			cwd     => "/etc/shibboleth",
 			path    => ["/bin"],
-			command => "rm -f /etc/shibboleth/sp-key.pem",
+			command => "rm -f /etc/shibboleth/sp-cert.pem",
 			require => Package["shibboleth"],
 		} # End exec.
 
