@@ -18,7 +18,12 @@ class shibboleth_sp {
 			require => File["/etc/yum.repos.d/security-shibboleth.repo"],
 		} # End package.
 
-		# Config.
+		# Ensure apache is running and will start at boot.
+		service { "shibd":
+			enable  => true,
+			ensure  => running,
+			require => Package["shibboleth"],
+		} # End if.
 
 		# Generate SSL cert.
 		exec { "shib-ssl-cert":
@@ -28,12 +33,15 @@ class shibboleth_sp {
 			require => Package["shibboleth"],
 		} # End exec.
 
+		# Service provider configuration file.
 		file { "/etc/shibboleth2.xml":
 			owner   => root,
 			group   => root,
 			mode    => 644,
 			content => template("shibboleth_sp/shibboleth2.xml.erb"),
 			require => Package["shibboleth"],
+# Enable once we are synching actively with Puppet, instead of one shot.
+#			notify  => Service["shibd"],
 		} # End file.
 
 	} # End if.
