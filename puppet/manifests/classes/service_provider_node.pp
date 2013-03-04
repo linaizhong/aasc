@@ -19,9 +19,9 @@ notice("asdf ${WEB_SERVER_SOFTWARE_TYPE}")
 	} # End if.
 
 	# Select the service provider software to install.
-	if ($SERVICE_PROVIDER_TYPE == 'shibboleth') {
+	if ($SERVICE_PROVIDER_SOFTWARE_TYPE == 'shibboleth') {
 		include 'shibboleth_sp'
-	} elsif ($SERVICE_PROVIDER_TYPE == 'simplesaml') {
+	} elsif ($SERVICE_PROVIDER_SOFTWARE_TYPE == 'simplesaml') {
 		include 'simplesaml_sp'
 	} # End if.
 

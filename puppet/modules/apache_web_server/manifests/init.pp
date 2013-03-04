@@ -1,9 +1,7 @@
 class apache_web_server {
 
-notice("ROAR#1")
-
 	if (($operatingsystem == 'Red Hat') or ($operatingsystem == 'CentOS')) {
-notice("ROAR#2")
+
 		# Install apache package.
 		$packages  = [ 'httpd', 'mod_ssl' ]
 		package { $packages:
@@ -17,7 +15,5 @@ notice("ROAR#2")
 			require => Package["httpd"],
 		} # End if.
 	} # End if.
-
-
 
 } # End class.

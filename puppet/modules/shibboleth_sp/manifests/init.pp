@@ -14,7 +14,8 @@ class shibboleth_sp {
 
 		# Install packages.
 		package { "shibboleth":
-			ensure => installed,
+			ensure  => installed,
+			require => File["/etc/yum.repos.d/security-shibboleth.repo"],
 		} # End package.
 
 		# Config.
@@ -24,6 +25,7 @@ class shibboleth_sp {
 			cwd     => "/etc/shibboleth",
 			path    => ["/etc/shibboleth"],
 			command => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
+			require => Package["shibboleth"],
 		} # End exec.
 
 	} # End if.
