@@ -16,7 +16,7 @@ class shibboleth_sp {
 		package { "shibboleth":
 			ensure  => installed,
 			require => File["/etc/yum.repos.d/security-shibboleth.repo"],
-			notify  => Exec['clean-default-shib-ssl-cert'],
+			notify  => Exec['generate-new-shib-ssl-cert'],
 		} # End package.
 
 		# Ensure apache is running and will start at boot.
@@ -27,19 +27,11 @@ class shibboleth_sp {
 		} # End if.
 
 		# Generate SSL cert.
-		exec { "clean-default-shib-ssl-cert":
-			cwd         => "/etc/shibboleth",
-			path        => ["/bin"],
-			command     => "rm -f /etc/shibboleth/sp-cert.pem",
-			refreshonly => true,
-		} # End exec.
-
-		# Generate SSL cert.
 		exec { "generate-new-shib-ssl-cert":
 			cwd     => "/etc/shibboleth",
 			path    => ["/etc/shibboleth", "/bin", "/usr/bin"],
 			command => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
-			onlyif  => "test ! -e /etc/shibboleth/sp-key.pem",
+			refreshonly => true,
 			require => Package["shibboleth"],
 		} # End exec.
 
