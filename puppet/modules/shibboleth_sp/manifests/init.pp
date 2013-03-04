@@ -28,6 +28,7 @@ notice("${AAF_METADATA_CERTIFICATE_URL}")
 		service { "shibd":
 			enable  => true,
 			ensure  => running,
+			notify  => Service['httpd'],
 			require => Package["shibboleth"],
 		} # End if.
 
