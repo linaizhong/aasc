@@ -18,6 +18,14 @@ class shibboleth_sp {
 		} # End package.
 
 		# Config.
+
+		# Generate SSL cert.
+		exec { "shib-ssl-cert":
+			cwd     => "/etc/shibboleth",
+			path    => ["/etc/shibboleth"],
+			command => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
+		} # End exec.
+
 	} # End if.
 
 } # End if.
