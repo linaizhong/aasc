@@ -13,12 +13,21 @@ Debug: importing '/tmp/automatesp/automatesp/puppet/manifests/nodes.pp' in envir
 Notice: Scope(Class[Service_provider_node]): asdf apache
 Debug: importing '/tmp/automatesp/automatesp/puppet/modules/apache_web_server/manifests/init.pp' in environment production
 Debug: Automatically imported apache_web_server from apache_web_server into production
-Notice: Scope(Class[Apache_web_server]): ROAR#1
-Notice: Scope(Class[Apache_web_server]): ROAR#2
 Debug: Executing '/bin/rpm --version'
 Debug: Executing '/bin/rpm -ql rpm'
 Debug: Executing '/bin/rpm -ql rpm'
 Debug: Executing '/bin/rpm --version'
+Debug: importing '/tmp/automatesp/automatesp/puppet/modules/shibboleth_sp/manifests/init.pp' in environment production
+Debug: Automatically imported shibboleth_sp from shibboleth_sp into production
+Notice: Scope(Class[Shibboleth_sp]): Installing Shibboleth SP.
+Debug: File[/etc/yum.repos.d/security-shibboleth.repo]: Adding default for backup
+Debug: Puppet::Type::Service::ProviderDebian: file /usr/sbin/update-rc.d does not exist
+Debug: Puppet::Type::Service::ProviderGentoo: file /sbin/rc-update does not exist
+Debug: Puppet::Type::Service::ProviderDaemontools: file /usr/bin/svc does not exist
+Debug: Puppet::Type::Service::ProviderSystemd: file /bin/systemctl does not exist
+Debug: Puppet::Type::Service::ProviderLaunchd: file /bin/launchctl does not exist
+Debug: Puppet::Type::Service::ProviderRunit: file /usr/bin/sv does not exist
+Debug: Puppet::Type::Service::ProviderOpenrc: file /sbin/rc-service does not exist
 Debug: Puppet::Type::Package::ProviderPkg: file /usr/bin/pkg does not exist
 Debug: Puppet::Type::Package::ProviderDpkg: file /usr/bin/dpkg does not exist
 Debug: Puppet::Type::Package::ProviderPortupgrade: file /usr/local/sbin/portinstall does not exist
@@ -41,24 +50,17 @@ Debug: Puppet::Type::Package::ProviderPkgin: file pkgin does not exist
 Debug: Puppet::Type::Package::ProviderAptrpm: file apt-get does not exist
 Debug: Puppet::Type::Package::ProviderPorts: file /usr/local/sbin/portupgrade does not exist
 Debug: Puppet::Type::Package::ProviderOpenbsd: file pkg_info does not exist
-Debug: Puppet::Type::Service::ProviderDebian: file /usr/sbin/update-rc.d does not exist
-Debug: Puppet::Type::Service::ProviderGentoo: file /sbin/rc-update does not exist
-Debug: Puppet::Type::Service::ProviderDaemontools: file /usr/bin/svc does not exist
-Debug: Puppet::Type::Service::ProviderSystemd: file /bin/systemctl does not exist
-Debug: Puppet::Type::Service::ProviderLaunchd: file /bin/launchctl does not exist
-Debug: Puppet::Type::Service::ProviderRunit: file /usr/bin/sv does not exist
-Debug: Puppet::Type::Service::ProviderOpenrc: file /sbin/rc-service does not exist
 Debug: Creating default schedules
 Debug: Using settings: adding file resource 'lastrunfile': 'File[/var/lib/puppet-aaf/state/last_run_summary.yaml]{:links=>:follow, :ensure=>:file, :backup=>false, :mode=>"644", :path=>"/var/lib/puppet-aaf/state/last_run_summary.yaml", :loglevel=>:debug}'
 Debug: Failed to load library 'ldap' for feature 'ldap'
 Debug: Puppet::Type::User::ProviderLdap: feature ldap is missing
-Debug: Puppet::Type::User::ProviderDirectoryservice: file /usr/bin/dsimport does not exist
-Debug: Puppet::Type::User::ProviderPw: file pw does not exist
 Debug: Puppet::Type::User::ProviderUser_role_add: file roleadd does not exist
+Debug: Puppet::Type::User::ProviderPw: file pw does not exist
+Debug: Puppet::Type::User::ProviderDirectoryservice: file /usr/bin/dsimport does not exist
 Debug: Failed to load library 'ldap' for feature 'ldap'
 Debug: Puppet::Type::Group::ProviderLdap: feature ldap is missing
-Debug: Puppet::Type::Group::ProviderDirectoryservice: file /usr/bin/dscl does not exist
 Debug: Puppet::Type::Group::ProviderPw: file pw does not exist
+Debug: Puppet::Type::Group::ProviderDirectoryservice: file /usr/bin/dscl does not exist
 Debug: Using settings: adding file resource 'logdir': 'File[/var/log/puppet]{:links=>:follow, :group=>"puppet", :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/log/puppet", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'certdir': 'File[/var/lib/puppet-aaf/ssl/certs]{:links=>:follow, :ensure=>:directory, :backup=>false, :owner=>"puppet", :path=>"/var/lib/puppet-aaf/ssl/certs", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'graphdir': 'File[/var/lib/puppet-aaf/state/graphs]{:links=>:follow, :ensure=>:directory, :backup=>false, :path=>"/var/lib/puppet-aaf/state/graphs", :loglevel=>:debug}'
@@ -77,26 +79,28 @@ Debug: Using settings: adding file resource 'rundir': 'File[/var/run/puppet]{:li
 Debug: Using settings: adding file resource 'privatedir': 'File[/var/lib/puppet-aaf/ssl/private]{:links=>:follow, :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/ssl/private", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'statefile': 'File[/var/lib/puppet-aaf/state/state.yaml]{:links=>:follow, :ensure=>:file, :backup=>false, :mode=>"660", :path=>"/var/lib/puppet-aaf/state/state.yaml", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'clientbucketdir': 'File[/var/lib/puppet-aaf/clientbucket]{:links=>:follow, :ensure=>:directory, :backup=>false, :mode=>"750", :path=>"/var/lib/puppet-aaf/clientbucket", :loglevel=>:debug}'
-Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
 Debug: /File[/var/lib/puppet-aaf/ssl/private]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
 Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
 Debug: /File[/var/lib/puppet-aaf/ssl]: Autorequiring File[/var/lib/puppet-aaf]
 Debug: /File[/tmp/automatesp/automatesp/puppet/lib]/ensure: created
-Debug: Finishing transaction 70152259581380
+Debug: Finishing transaction 70354075719700
 Debug: Loaded state in 0.00 seconds
 Debug: Loaded state in 0.00 seconds
-Info: Applying configuration version '1362369348'
+Info: Applying configuration version '1362369654'
+Debug: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/require: requires Package[shibboleth]
 Debug: /Stage[main]/Apache_web_server/Service[httpd]/require: requires Package[httpd]
+Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]/require: requires File[/etc/yum.repos.d/security-shibboleth.repo]
 Debug: /Schedule[daily]: Skipping device resources because running on a host
 Debug: /Schedule[monthly]: Skipping device resources because running on a host
 Debug: /Schedule[hourly]: Skipping device resources because running on a host
@@ -108,13 +112,18 @@ Debug: Executing '/bin/rpm -qa --nosignature --nodigest --qf '%{NAME} %|EPOCH?{%
 Debug: Executing '/sbin/service httpd status'
 Debug: Executing '/sbin/chkconfig httpd'
 Debug: /Schedule[weekly]: Skipping device resources because running on a host
+Debug: Exec[shib-ssl-cert](provider=posix): Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
+Debug: Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
+Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: ./keygen.sh: line 23: rm: command not found
+Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: The files ./sp-key.pem and/or ./sp-cert.pem already exist!
+Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: Use -f option to force recreation of keypair.
 Debug: /Schedule[puppet]: Skipping device resources because running on a host
-Debug: Finishing transaction 70152258734140
+Debug: Finishing transaction 70354075776580
 Debug: Storing state
-Debug: Stored state in 0.01 seconds
-Notice: Finished catalog run in 0.26 seconds
+Debug: Stored state in 0.02 seconds
+Notice: Finished catalog run in 0.27 seconds
 Debug: Using settings: adding file resource 'rrddir': 'File[/var/lib/puppet-aaf/rrd]{:links=>:follow, :group=>"puppet", :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/rrd", :loglevel=>:debug}'
-Debug: Finishing transaction 70152260330000
+Debug: Finishing transaction 70354086297880
 Debug: Received report to process from auto-sp.paulstepowski.org
 Debug: Processing report from auto-sp.paulstepowski.org with processor Puppet::Reports::Store
 
