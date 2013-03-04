@@ -28,6 +28,14 @@ class shibboleth_sp {
 			require => Package["shibboleth"],
 		} # End exec.
 
+		file { "/etc/shibboleth2.xml":
+			owner   => root,
+			group   => root,
+			mode    => 644,
+			content => template("shibboleth_sp/shibboleth2.xml.erb"),
+			require => Package["shibboleth"],
+		} # End file.
+
 	} # End if.
 
 } # End if.
