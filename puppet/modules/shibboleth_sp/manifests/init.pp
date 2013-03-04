@@ -31,7 +31,7 @@ class shibboleth_sp {
 			cwd         => "/etc/shibboleth",
 			path        => ["/bin"],
 			command     => "rm -f /etc/shibboleth/sp-cert.pem",
-			refreshonly => true
+			refreshonly => true,
 			require     => Package["shibboleth"],
 		} # End exec.
 
