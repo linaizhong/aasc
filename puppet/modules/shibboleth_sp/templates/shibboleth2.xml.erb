@@ -70,7 +70,7 @@
             helpLocation="/about.html"
             styleSheet="/shibboleth-sp/main.css"/>
         
-<MetadataProvider type="XML" uri="<%= @AAF_METADATA_CERTIFICATE_URL %>"
+<MetadataProvider type="XML" uri="<%= @AAF_METADATA_DOCUMENT_URL %>"
      backingFilePath="metadata.aaf.xml" reloadInterval="7200">
    <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
    <MetadataFilter type="Signature" certificate="aaf-metadata-cert.pem"/>
