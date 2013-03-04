@@ -32,7 +32,6 @@ class shibboleth_sp {
 			path        => ["/bin"],
 			command     => "rm -f /etc/shibboleth/sp-cert.pem",
 			refreshonly => true,
-			require     => Package["shibboleth"],
 		} # End exec.
 
 		# Generate SSL cert.
