@@ -49,7 +49,7 @@ class shibboleth_sp {
 		} # End exec.
 
 		# Service provider configuration file.
-		file { "/etc/shibboleth2.xml":
+		file { "/etc/shibboleth/shibboleth2.xml":
 			owner   => root,
 			group   => root,
 			mode    => 644,
