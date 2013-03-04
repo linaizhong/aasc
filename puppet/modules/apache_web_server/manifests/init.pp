@@ -36,17 +36,17 @@ class apache_web_server {
                        		owner  => root,
                        		group  => root,
                        		mode   => 644,
-				source => "puppet:///modules/apache_web_server/index.html".
+				source => "puppet:///modules/apache_web_server/index.html";
 			"/var/www/html/secure":
                        		owner  => root,
                        		group  => root,
                        		mode   => 755,
-				ensure => directory,
+				ensure => directory;
 			"/var/www/html/secure/index.html":
                        		owner  => root,
                        		group  => root,
                        		mode   => 644,
-				source => "puppet:///modules/apache_web_server/index.html".
+				source => "puppet:///modules/apache_web_server/index.html";
                	} # End file.
 	
 
