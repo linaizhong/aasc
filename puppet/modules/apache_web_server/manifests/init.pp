@@ -24,7 +24,8 @@ class apache_web_server {
                         	mode    => 644,
                         	content => template("apache_web_server/shib.conf.erb"),
                         	require => Package["httpd"],
-				notify  => Service["httpd"],
+# Enable once we are synching actively with Puppet, instead of one shot.
+#				notify  => Service["httpd"],
                 	} # End file.
 
 		} # End if
