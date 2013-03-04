@@ -20,7 +20,7 @@
     -->
 
     <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits are defined. -->
-    <ApplicationDefaults entityID="<%= $SERVICE_PROVIDER_ENTITY_ID %>"
+    <ApplicationDefaults entityID="<%= SERVICE_PROVIDER_ENTITY_ID %>"
                          REMOTE_USER="eppn persistent-id targeted-id">
 
         <!--
@@ -42,7 +42,7 @@
             You can also override entityID on /Login query string, or in RequestMap/htaccess.
             -->
             <SSO entityID="https://idp.example.org/idp/shibboleth"
-                 discoveryProtocol="SAMLDS" discoveryURL="<%= $DISCOVERY_SERVICE_URL %>">
+                 discoveryProtocol="SAMLDS" discoveryURL="<%= DISCOVERY_SERVICE_URL %>">
               SAML2 SAML1
             </SSO>
 
