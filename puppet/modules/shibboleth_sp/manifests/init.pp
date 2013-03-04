@@ -49,15 +49,20 @@ notice("${AAF_METADATA_CERTIFICATE_URL}")
 			require     => Package["wget"],
 		} # End exec.
 
-		# Service provider configuration file.
-		file { "/etc/shibboleth/shibboleth2.xml":
-			owner   => root,
-			group   => root,
-			mode    => 644,
-			content => template("shibboleth_sp/shibboleth2.xml.erb"),
-			require => Package["shibboleth"],
-# Enable once we are synching actively with Puppet, instead of one shot.
-#			notify  => Service["shibd"],
+		# Service provider configuration files.
+		file {
+			"/etc/shibboleth/shibboleth2.xml":
+				owner   => root,
+				group   => root,
+				mode    => 644,
+				content => template("shibboleth_sp/shibboleth2.xml.erb"),
+				# Enable once we are synching actively with Puppet, instead of one shot.
+				# notify  => Service["shibd"],
+				require => Package["shibboleth"];
+			"/etc/shibboleth/sp-key.pem":
+				owner => shibd,
+				group => shibd,
+				mode  => 600;
 		} # End file.
 
 	} # End if.

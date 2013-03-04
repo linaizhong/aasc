@@ -91,34 +91,34 @@ Debug: Using settings: adding file resource 'rundir': 'File[/var/run/puppet]{:li
 Debug: Using settings: adding file resource 'privatedir': 'File[/var/lib/puppet-aaf/ssl/private]{:links=>:follow, :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/ssl/private", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'statefile': 'File[/var/lib/puppet-aaf/state/state.yaml]{:links=>:follow, :ensure=>:file, :backup=>false, :mode=>"660", :path=>"/var/lib/puppet-aaf/state/state.yaml", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'clientbucketdir': 'File[/var/lib/puppet-aaf/clientbucket]{:links=>:follow, :ensure=>:directory, :backup=>false, :mode=>"750", :path=>"/var/lib/puppet-aaf/clientbucket", :loglevel=>:debug}'
-Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
 Debug: /File[/var/lib/puppet-aaf/ssl/private]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
 Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/ssl]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
 Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl]: Autorequiring File[/var/lib/puppet-aaf]
 Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
 Debug: /File[/tmp/automatesp/automatesp/puppet/lib]/ensure: created
-Debug: Finishing transaction 70263404966700
+Debug: Finishing transaction 70345492411180
 Debug: Loaded state in 0.00 seconds
 Debug: Loaded state in 0.00 seconds
-Info: Applying configuration version '1362381807'
+Info: Applying configuration version '1362381915'
 Debug: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth/shibboleth2.xml]/require: requires Package[shibboleth]
-Debug: /Stage[main]/Shibboleth_sp/Exec[initialise-aaf-metadata-document]/require: requires Package[wget]
 Debug: /Stage[main]/Shibboleth_sp/Exec[generate-new-shib-ssl-cert]/require: requires Package[shibboleth]
+Debug: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]/require: requires Package[httpd]
 Debug: /Stage[main]/Shibboleth_sp/Service[shibd]/require: requires Package[shibboleth]
+Debug: /Stage[main]/Apache_web_server/Service[httpd]/require: requires Package[httpd]
 Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]/require: requires File[/etc/yum.repos.d/security-shibboleth.repo]
 Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]/notify: subscribes to Exec[generate-new-shib-ssl-cert]
 Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]/notify: subscribes to Exec[initialise-aaf-metadata-document]
-Debug: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]/require: requires Package[httpd]
-Debug: /Stage[main]/Apache_web_server/Service[httpd]/require: requires Package[httpd]
+Debug: /Stage[main]/Shibboleth_sp/Exec[initialise-aaf-metadata-document]/require: requires Package[wget]
 Debug: /Stage[main]/Apache_web_server/File[/var/www/html/secure/index.html]: Autorequiring File[/var/www/html/secure]
 Debug: /Schedule[daily]: Skipping device resources because running on a host
 Debug: /Schedule[monthly]: Skipping device resources because running on a host
@@ -128,49 +128,24 @@ Debug: Executing '/bin/rpm --version'
 Debug: Executing '/bin/rpm -qa --nosignature --nodigest --qf '%{NAME} %|EPOCH?{%{EPOCH}}:{0}| %{VERSION} %{RELEASE} %{ARCH}
 ''
 Debug: /Schedule[never]: Skipping device resources because running on a host
-Notice: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]/ensure: defined content as '{md5}36185e296e1fadf79f002b0779b774a4'
-Debug: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]: The container Class[Apache_web_server] will propagate my refresh event
 Debug: Executing '/sbin/service httpd status'
 Debug: Executing '/sbin/chkconfig httpd'
-Debug: Executing '/bin/rpm -q shibboleth --nosignature --nodigest --qf %{NAME} %|EPOCH?{%{EPOCH}}:{0}| %{VERSION} %{RELEASE} %{ARCH}
-'
-Debug: Package[shibboleth](provider=yum): Ensuring => present
-Debug: Executing '/usr/bin/yum -d 0 -e 0 -y install shibboleth'
-Debug: Executing '/bin/rpm -q shibboleth --nosignature --nodigest --qf %{NAME} %|EPOCH?{%{EPOCH}}:{0}| %{VERSION} %{RELEASE} %{ARCH}
-'
-Notice: /Stage[main]/Shibboleth_sp/Package[shibboleth]/ensure: created
-Info: /Stage[main]/Shibboleth_sp/Package[shibboleth]: Scheduling refresh of Exec[initialise-aaf-metadata-document]
-Info: /Stage[main]/Shibboleth_sp/Package[shibboleth]: Scheduling refresh of Exec[generate-new-shib-ssl-cert]
-Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]: The container Class[Shibboleth_sp] will propagate my refresh event
-Debug: Exec[generate-new-shib-ssl-cert](provider=posix): Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
-Debug: Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
-Notice: /Stage[main]/Shibboleth_sp/Exec[generate-new-shib-ssl-cert]: Triggered 'refresh' from 1 events
-Debug: /Stage[main]/Shibboleth_sp/Exec[generate-new-shib-ssl-cert]: The container Class[Shibboleth_sp] will propagate my refresh event
 Debug: Executing '/sbin/service shibd status'
 Debug: Executing '/sbin/chkconfig shibd'
-Debug: Executing '/sbin/service shibd start'
-Debug: Executing '/sbin/chkconfig shibd'
-Notice: /Stage[main]/Shibboleth_sp/Service[shibd]/ensure: ensure changed 'stopped' to 'running'
-Debug: /Stage[main]/Shibboleth_sp/Service[shibd]: The container Class[Shibboleth_sp] will propagate my refresh event
-Debug: Finishing transaction 70263413652500
-Info: FileBucket got a duplicate file {md5}99d725ce7076dbd46f452b9fac4d906b
-Info: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth/shibboleth2.xml]: Filebucketed /etc/shibboleth/shibboleth2.xml to main with sum 99d725ce7076dbd46f452b9fac4d906b
-Notice: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth/shibboleth2.xml]/content: content changed '{md5}99d725ce7076dbd46f452b9fac4d906b' to '{md5}15592b1118262bac5caf3c9cdb46b6e7'
+Debug: Finishing transaction 70345501182460
+Info: FileBucket adding {md5}15592b1118262bac5caf3c9cdb46b6e7
+Info: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth/shibboleth2.xml]: Filebucketed /etc/shibboleth/shibboleth2.xml to main with sum 15592b1118262bac5caf3c9cdb46b6e7
+Notice: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth/shibboleth2.xml]/content: content changed '{md5}15592b1118262bac5caf3c9cdb46b6e7' to '{md5}eef5826a3caf84e4368289a1a5d068c6'
 Debug: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth/shibboleth2.xml]: The container Class[Shibboleth_sp] will propagate my refresh event
-Debug: Exec[initialise-aaf-metadata-document](provider=posix): Executing 'wget https://ds.test.aaf.edu.au/distribution/metadata/aaf-metadata-cert.pem -O /etc/shibboleth/aaf-metadata-cert.pem'
-Debug: Executing 'wget https://ds.test.aaf.edu.au/distribution/metadata/aaf-metadata-cert.pem -O /etc/shibboleth/aaf-metadata-cert.pem'
-Notice: /Stage[main]/Shibboleth_sp/Exec[initialise-aaf-metadata-document]: Triggered 'refresh' from 1 events
-Debug: /Stage[main]/Shibboleth_sp/Exec[initialise-aaf-metadata-document]: The container Class[Shibboleth_sp] will propagate my refresh event
 Debug: Class[Shibboleth_sp]: The container Stage[main] will propagate my refresh event
 Debug: /Schedule[weekly]: Skipping device resources because running on a host
 Debug: /Schedule[puppet]: Skipping device resources because running on a host
-Debug: Class[Apache_web_server]: The container Stage[main] will propagate my refresh event
-Debug: Finishing transaction 70263404441940
+Debug: Finishing transaction 70345491886780
 Debug: Storing state
-Debug: Stored state in 0.07 seconds
-Notice: Finished catalog run in 11.11 seconds
+Debug: Stored state in 0.01 seconds
+Notice: Finished catalog run in 0.28 seconds
 Debug: Using settings: adding file resource 'rrddir': 'File[/var/lib/puppet-aaf/rrd]{:links=>:follow, :group=>"puppet", :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/rrd", :loglevel=>:debug}'
-Debug: Finishing transaction 70263441121460
+Debug: Finishing transaction 70345500905940
 Debug: Received report to process from auto-sp.paulstepowski.org
 Debug: Processing report from auto-sp.paulstepowski.org with processor Puppet::Reports::Store
 
