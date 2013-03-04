@@ -16,7 +16,7 @@ class shibboleth_sp {
 		package { "shibboleth":
 			ensure  => installed,
 			require => File["/etc/yum.repos.d/security-shibboleth.repo"],
-			notify  => Exec['generate-new-shib-ssl-cert'],
+			notify  => [Exec['generate-new-shib-ssl-cert'], Exec['initialise-aaf-metadata-document']],
 		} # End package.
 
 		package { "wget":
