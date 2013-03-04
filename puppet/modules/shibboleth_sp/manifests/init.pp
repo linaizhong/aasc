@@ -19,6 +19,10 @@ class shibboleth_sp {
 			notify  => Exec['generate-new-shib-ssl-cert'],
 		} # End package.
 
+		package { "wget":
+			ensure  => installed,
+		} # End package.
+
 		# Ensure apache is running and will start at boot.
 		service { "shibd":
 			enable  => true,
@@ -41,7 +45,7 @@ class shibboleth_sp {
 			path        => ["/bin", "/usr/bin"],
 			command     => "wget $AAF_METADATA_CERTIFICATE_URL -O /etc/shibboleth/aaf-metadata-cert.pem",
 			refreshonly => true,
-			require     => Package["shibboleth"],
+			require     => Package["wget"],
 		} # End exec.
 
 		# Service provider configuration file.
