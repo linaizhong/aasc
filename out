@@ -29,6 +29,13 @@ Debug: template[/tmp/automatesp/automatesp/puppet/modules/shibboleth_sp/template
 Debug: File[/etc/httpd/conf.d/shib.conf]: Adding default for backup
 Debug: File[/etc/yum.repos.d/security-shibboleth.repo]: Adding default for backup
 Debug: File[/etc/shibboleth2.xml]: Adding default for backup
+Debug: Puppet::Type::Service::ProviderDebian: file /usr/sbin/update-rc.d does not exist
+Debug: Puppet::Type::Service::ProviderGentoo: file /sbin/rc-update does not exist
+Debug: Puppet::Type::Service::ProviderDaemontools: file /usr/bin/svc does not exist
+Debug: Puppet::Type::Service::ProviderSystemd: file /bin/systemctl does not exist
+Debug: Puppet::Type::Service::ProviderLaunchd: file /bin/launchctl does not exist
+Debug: Puppet::Type::Service::ProviderRunit: file /usr/bin/sv does not exist
+Debug: Puppet::Type::Service::ProviderOpenrc: file /sbin/rc-service does not exist
 Debug: Puppet::Type::Package::ProviderPkg: file /usr/bin/pkg does not exist
 Debug: Puppet::Type::Package::ProviderDpkg: file /usr/bin/dpkg does not exist
 Debug: Puppet::Type::Package::ProviderPortupgrade: file /usr/local/sbin/portinstall does not exist
@@ -51,13 +58,6 @@ Debug: Puppet::Type::Package::ProviderPkgin: file pkgin does not exist
 Debug: Puppet::Type::Package::ProviderAptrpm: file apt-get does not exist
 Debug: Puppet::Type::Package::ProviderPorts: file /usr/local/sbin/portupgrade does not exist
 Debug: Puppet::Type::Package::ProviderOpenbsd: file pkg_info does not exist
-Debug: Puppet::Type::Service::ProviderDebian: file /usr/sbin/update-rc.d does not exist
-Debug: Puppet::Type::Service::ProviderGentoo: file /sbin/rc-update does not exist
-Debug: Puppet::Type::Service::ProviderDaemontools: file /usr/bin/svc does not exist
-Debug: Puppet::Type::Service::ProviderSystemd: file /bin/systemctl does not exist
-Debug: Puppet::Type::Service::ProviderLaunchd: file /bin/launchctl does not exist
-Debug: Puppet::Type::Service::ProviderRunit: file /usr/bin/sv does not exist
-Debug: Puppet::Type::Service::ProviderOpenrc: file /sbin/rc-service does not exist
 Debug: Creating default schedules
 Debug: Using settings: adding file resource 'lastrunfile': 'File[/var/lib/puppet-aaf/state/last_run_summary.yaml]{:links=>:follow, :ensure=>:file, :backup=>false, :mode=>"644", :path=>"/var/lib/puppet-aaf/state/last_run_summary.yaml", :loglevel=>:debug}'
 Debug: Failed to load library 'ldap' for feature 'ldap'
@@ -87,30 +87,31 @@ Debug: Using settings: adding file resource 'rundir': 'File[/var/run/puppet]{:li
 Debug: Using settings: adding file resource 'privatedir': 'File[/var/lib/puppet-aaf/ssl/private]{:links=>:follow, :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/ssl/private", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'statefile': 'File[/var/lib/puppet-aaf/state/state.yaml]{:links=>:follow, :ensure=>:file, :backup=>false, :mode=>"660", :path=>"/var/lib/puppet-aaf/state/state.yaml", :loglevel=>:debug}'
 Debug: Using settings: adding file resource 'clientbucketdir': 'File[/var/lib/puppet-aaf/clientbucket]{:links=>:follow, :ensure=>:directory, :backup=>false, :mode=>"750", :path=>"/var/lib/puppet-aaf/clientbucket", :loglevel=>:debug}'
-Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/ssl/private]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/ssl]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
-Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
-Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
-Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
 Debug: /File[/var/lib/puppet-aaf/clientbucket]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_summary.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/state/state.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
 Debug: /File[/var/lib/puppet-aaf/state/graphs]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/ssl/private]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/ssl]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/client_data]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/ssl/certs]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/ssl/certificate_requests]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/ssl/public_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/state/last_run_report.yaml]: Autorequiring File[/var/lib/puppet-aaf/state]
+Debug: /File[/var/lib/puppet-aaf/ssl/private_keys]: Autorequiring File[/var/lib/puppet-aaf/ssl]
+Debug: /File[/var/lib/puppet-aaf/client_yaml]: Autorequiring File[/var/lib/puppet-aaf]
+Debug: /File[/var/lib/puppet-aaf/state]: Autorequiring File[/var/lib/puppet-aaf]
 Debug: /File[/tmp/automatesp/automatesp/puppet/lib]/ensure: created
-Debug: Finishing transaction 69832755953760
+Debug: Finishing transaction 70211090833140
 Debug: Loaded state in 0.00 seconds
 Debug: Loaded state in 0.00 seconds
-Info: Applying configuration version '1362374639'
-Debug: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth2.xml]/require: requires Package[shibboleth]
+Info: Applying configuration version '1362374913'
 Debug: /Stage[main]/Shibboleth_sp/Package[shibboleth]/require: requires File[/etc/yum.repos.d/security-shibboleth.repo]
-Debug: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/require: requires Package[shibboleth]
-Debug: /Stage[main]/Apache_web_server/Service[httpd]/require: requires Package[httpd]
+Debug: /Stage[main]/Shibboleth_sp/Service[shibd]/require: requires Package[shibboleth]
 Debug: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]/require: requires Package[httpd]
+Debug: /Stage[main]/Apache_web_server/Service[httpd]/require: requires Package[httpd]
+Debug: /Stage[main]/Shibboleth_sp/File[/etc/shibboleth2.xml]/require: requires Package[shibboleth]
+Debug: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/require: requires Package[shibboleth]
 Debug: /Schedule[daily]: Skipping device resources because running on a host
 Debug: /Schedule[monthly]: Skipping device resources because running on a host
 Debug: /Schedule[hourly]: Skipping device resources because running on a host
@@ -119,14 +120,14 @@ Debug: Prefetching yum resources for package
 Debug: Executing '/bin/rpm --version'
 Debug: Executing '/bin/rpm -qa --nosignature --nodigest --qf '%{NAME} %|EPOCH?{%{EPOCH}}:{0}| %{VERSION} %{RELEASE} %{ARCH}
 ''
-Debug: Finishing transaction 69832755308980
-Info: FileBucket adding {md5}707aac2599882d1f18c47c3b114e5ba6
-Info: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]: Filebucketed /etc/httpd/conf.d/shib.conf to main with sum 707aac2599882d1f18c47c3b114e5ba6
-Notice: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]/content: content changed '{md5}707aac2599882d1f18c47c3b114e5ba6' to '{md5}36185e296e1fadf79f002b0779b774a4'
-Debug: /Stage[main]/Apache_web_server/File[/etc/httpd/conf.d/shib.conf]: The container Class[Apache_web_server] will propagate my refresh event
 Debug: Executing '/sbin/service httpd status'
 Debug: Executing '/sbin/chkconfig httpd'
-Debug: Class[Apache_web_server]: The container Stage[main] will propagate my refresh event
+Debug: Executing '/sbin/service shibd status'
+Debug: Executing '/sbin/chkconfig shibd'
+Debug: Executing '/sbin/service shibd start'
+Debug: Executing '/sbin/chkconfig shibd'
+Notice: /Stage[main]/Shibboleth_sp/Service[shibd]/ensure: ensure changed 'stopped' to 'running'
+Debug: /Stage[main]/Shibboleth_sp/Service[shibd]: The container Class[Shibboleth_sp] will propagate my refresh event
 Debug: /Schedule[weekly]: Skipping device resources because running on a host
 Debug: Exec[shib-ssl-cert](provider=posix): Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
 Debug: Executing './keygen.sh -f -h auto-sp.paulstepowski.org -e https://auto-sp.paulstepowski.org/shibboleth'
@@ -134,12 +135,12 @@ Notice: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]/returns: executed success
 Debug: /Stage[main]/Shibboleth_sp/Exec[shib-ssl-cert]: The container Class[Shibboleth_sp] will propagate my refresh event
 Debug: Class[Shibboleth_sp]: The container Stage[main] will propagate my refresh event
 Debug: /Schedule[puppet]: Skipping device resources because running on a host
-Debug: Finishing transaction 69832755786120
+Debug: Finishing transaction 70211090569320
 Debug: Storing state
 Debug: Stored state in 0.01 seconds
-Notice: Finished catalog run in 0.32 seconds
+Notice: Finished catalog run in 0.47 seconds
 Debug: Using settings: adding file resource 'rrddir': 'File[/var/lib/puppet-aaf/rrd]{:links=>:follow, :group=>"puppet", :ensure=>:directory, :backup=>false, :owner=>"puppet", :mode=>"750", :path=>"/var/lib/puppet-aaf/rrd", :loglevel=>:debug}'
-Debug: Finishing transaction 69832765371240
+Debug: Finishing transaction 70211100181340
 Debug: Received report to process from auto-sp.paulstepowski.org
 Debug: Processing report from auto-sp.paulstepowski.org with processor Puppet::Reports::Store
 
