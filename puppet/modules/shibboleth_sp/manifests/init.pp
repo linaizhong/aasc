@@ -33,11 +33,12 @@ notice("${AAF_METADATA_CERTIFICATE_URL}")
 
 		# Generate SSL cert.
 		exec { "generate-new-shib-ssl-cert":
-			cwd     => "/etc/shibboleth",
-			path    => ["/etc/shibboleth", "/bin", "/usr/bin"],
-			command => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
+			cwd         => "/etc/shibboleth",
+			path        => ["/etc/shibboleth", "/bin", "/usr/bin"],
+			command     => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
 			refreshonly => true,
-			require => Package["shibboleth"],
+			notify      => Exec["fix-key-permissions"],
+			require     => Package["shibboleth"],
 		} # End exec.
 
 		# Download AAF metadata document.
@@ -47,6 +48,14 @@ notice("${AAF_METADATA_CERTIFICATE_URL}")
 			command     => "wget $AAF_METADATA_CERTIFICATE_URL -O /etc/shibboleth/aaf-metadata-cert.pem",
 			refreshonly => true,
 			require     => Package["wget"],
+		} # End exec.
+
+		exec { "fix-key-permissions":
+			cwd         => "/etc/shibboleth",
+			path        => ["/bin", "/usr/bin"],
+			command     => "chown shibd.shibd /etc/shibboleth/sp-key.pem",
+			refreshonly => true,
+			notify      => Service['shibd'],
 		} # End exec.
 
 		# Service provider configuration files.
@@ -59,10 +68,6 @@ notice("${AAF_METADATA_CERTIFICATE_URL}")
 				# Enable once we are synching actively with Puppet, instead of one shot.
 				# notify  => Service["shibd"],
 				require => Package["shibboleth"];
-			"/etc/shibboleth/sp-key.pem":
-				owner => shibd,
-				group => shibd,
-				mode  => 600;
 		} # End file.
 
 	} # End if.
