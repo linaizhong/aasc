@@ -1,6 +1,8 @@
 # Configuration applied to all service providers servers.
 class service_provider_node {
 
+notice("asdf ${WEB_SERVER_SOFTWARE_TYPE}")
+
 	# Include class for UNIX vs Windows.
 	# TODO: Change to reliable check for Windows/*nix.
 	if (true) {
@@ -10,9 +12,9 @@ class service_provider_node {
 	} # End if.
 
 	# Select the web server software to install.
-	if ($WEB_SERVER_TYPE == 'apache') {
+	if ($WEB_SERVER_SOFTWARE_TYPE == 'apache') {
 		include 'apache_web_server'
-	} elsif ($WEB_SERVER_TYPE == 'other') {
+	} elsif ($WEB_SERVER_SOFTWARE_TYPE == 'other') {
 		include 'null'
 	} # End if.
 
