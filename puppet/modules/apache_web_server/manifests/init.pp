@@ -12,8 +12,9 @@ notice("ROAR#2")
 
 		# Ensure apache is running and will start at boot.
 		service { "httpd":
-			enable => true,
-			start =>  true,
+			enable  => true,
+			ensure  => running,
+			require => Package["httpd"],
 		} # End if.
 	} # End if.
 
