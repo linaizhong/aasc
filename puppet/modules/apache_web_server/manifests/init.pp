@@ -3,7 +3,7 @@ class apache_web_server {
 	if (($operatingsystem == 'Red Hat') or ($operatingsystem == 'CentOS')) {
 
 		# Install apache package.
-		$packages  = [ 'httpd', 'mod_ssl', 'mod_php' ]
+		$packages  = [ 'httpd', 'mod_ssl', 'php' ]
 		package { $packages:
 			ensure => installed,
 		} # End package.
