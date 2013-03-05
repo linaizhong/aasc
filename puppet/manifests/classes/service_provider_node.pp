@@ -1,8 +1,6 @@
 # Configuration applied to all service providers servers.
 class service_provider_node {
 
-notice("asdf ${WEB_SERVER_SOFTWARE_TYPE}")
-
 	# Include class for UNIX vs Windows.
 	# TODO: Change to reliable check for Windows/*nix.
 	if (true) {

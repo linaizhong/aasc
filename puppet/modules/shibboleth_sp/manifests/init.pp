@@ -1,8 +1,5 @@
 class shibboleth_sp {
 
-	notice("Installing Shibboleth SP.")
-notice("${AAF_METADATA_CERTIFICATE_URL}")
-
 	if (($operatingsystem == 'Red Hat') or ($operatingsystem == 'CentOS')) {
 
 		# Yum repo set up.
