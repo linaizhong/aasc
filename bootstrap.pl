@@ -205,7 +205,7 @@ my $command;
 my $stdout;
 my $return;
 # Clone from git.
-$command = "cd $working_dir && git clone git\@github.com:ausaccessfed/automatesp.git";
+$command = "cd $working_dir && git clone git://github.com/ausaccessfed/automatesp.git";
 $stdout = `$command`;
 $return = $?;
 if ($return != 0) {
