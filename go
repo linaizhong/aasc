@@ -283,11 +283,6 @@ foreach my $required_package (@required_packages) {
 	} # End if.
 } # End foreach.
 
-# . Configure Yum repositories.
-# - foreach required repo
-# -- check if already configured
-# -- if not already configured, configure it
-
 # . Install all required packages.
 my $install_package_command = ${$INSTALL_PACKAGE_COMMAND}{$operating_system_name}{$operating_system_release};
 foreach my $package_to_install (sort(@packages_to_install)) {
@@ -348,6 +343,7 @@ close(FP);
 # Run puppet on downloaded manifests.
 my $puppet_dir = "$working_dir/automatesp/puppet";
 $command = "puppet apply --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
+#print("$command\n");
 $stdout = `$command`;
 $return = $?;
 if ($return != 0) {
@@ -355,17 +351,25 @@ if ($return != 0) {
 	exit($EXIT_FAILURE);
 } # End if.
 
-print("$command\n");
 print("$stdout\n");
 
 # Clean up
-# $working dir
-# $puppet_var_dir
+$command = "rm -rf $working_dir $puppet_dir";
+$stdout = `$command`;
+$return = $?;
+if ($return != 0) {
+	printf(STDERR "ERROR: Could not clean up working directory '$working_dir' and/or Puppet directory '$puppet_dir'.\n");
+	exit($EXIT_FAILURE);
+} # End if.
 
 
 # Display program usage to standard error.
 sub usage {
-	printf(STDERR "$0 [ -d working_dir ] [ -e environment_type ] [ -i entity_id ] [ -s sp_software ] [ -w web_server_software ]\n\n");
+	printf(STDERR "$0 [ -n ] [ -h ] [ -d working_dir ] [ -e environment_type ] [ -i entity_id ] [ -s sp_software ] [ -w web_server_software ]\n\n");
+	printf(STDERR "-h = show this help screen.\n");
+	printf(STDERR "-n = enable non-interactive mode.\n");
+	printf(STDERR "NOTE: No other flags are available unless non-interactive mode (-n) is enabled.\n");
+	printf(STDERR "If non-interactive mode is enbaled, the tool will build an SP with no further input from the user.\n");
 	printf(STDERR "working_dir - the directory where this script will copy files it needs to install the SP.\n");
 	printf(STDERR "environment_type - the environment type that this service provider will run under.\n");
 	printf(STDERR "entity_id - the entity ID for this service provider.\n");
