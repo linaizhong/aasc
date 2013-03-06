@@ -4,9 +4,11 @@ use strict;
 use Getopt::Std;
 use File::Path;
 
-my $EXIT_SUCCESS = 0;
+my $VERSION = '0.1';
+my @AUTHORS = ('Paul Stepowski');
+my $CONTACT = 'support@aaf.edu.au';
+my $EXIT_SUCCESS = 0;;
 my $EXIT_FAILURE = 1;
-
 
 my $REQUIRED_PACKAGES = {
 	'CentOS' => {
@@ -88,7 +90,25 @@ if ($< != 0) {
 
 # Parse command line arguments.
 my %opts;
-getopts("nd:e:i:s:w:", \%opts);
+getopts("hnd:e:i:s:w:", \%opts);
+
+# Show help screen and exit if specified on command line.
+if (exists($opts{'h'})) {
+	&usage();
+	exit($EXIT_SUCCESS);
+} # End if.
+
+# Display program banner.
+foreach (1..80) { print("="); } print("\n");
+print("Australian Access Federation - Automated Service Provider Installer\n");
+print("version $VERSION\n");
+print("by ");
+foreach (@AUTHORS) {
+	print("$_\n");
+} # End foreach.
+foreach (1..80) { print("="); } print("\n");
+print("For support please contact $CONTACT.\n");
+foreach (1..80) { print("="); } print("\n");
 
 # Non-interactive mode.
 if (exists($opts{'n'})) {
