@@ -5,8 +5,8 @@ class redhat_ntp_client {
 	} # End package.
 
 	service { "ntpd":
-		enabled => true,
-		running => true,
+		enable  => true,
+		ensure  => running,
 		require => Package["ntp"],
 	} # End service.
 
