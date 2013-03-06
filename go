@@ -72,19 +72,11 @@ my $puppet_var_dir = '/var/lib/puppet-aaf';
 
 my $operating_system_name = '';
 my $operating_system_release = '';
-
-my %opts;
-getopt('d:e:i:s:w:"', \%opts);
-my $working_dir = $opts{'d'} || $DEFAULT_WORKING_DIR;
-my $environment_type = $opts{'e'} || $DEFAULT_ENVIRONMENT_TYPE;
-my $entity_id = $opts{'i'} || $default_entity_id;
-my $sp_software_type = $opts{'s'} || $DEFAULT_SP_SOFTWARE_TYPE;
-my $web_server_software_type = $opts{'w'} || $DEFAULT_WEB_SERVER_SOFTWARE_TYPE;
-#print("\$working_dir:$working_dir:\n");
-#print("\$environment_type:$environment_type:\n");
-#print("\$entity_id:$entity_id:\n");
-#print("\$sp_software_type:$sp_software_type:\n");
-#print("\$web_server_software_type:$web_server_software_type:\n");
+my $working_dir = '';
+my $environment_type = '';
+my $entity_id = '';
+my $sp_software_type = '';
+my $web_server_software_type = '';
 
 # Check the script is being run as root.
 # TODO: Not portable to Windows!
@@ -94,9 +86,98 @@ if ($< != 0) {
 	exit($EXIT_FAILURE);
 } # End if.
 
+# Parse command line arguments.
+my %opts;
+getopts("nd:e:i:s:w:", \%opts);
+
+# Non-interactive mode.
+if (exists($opts{'n'})) {
+	$working_dir = $opts{'d'} || $DEFAULT_WORKING_DIR;
+	$environment_type = $opts{'e'} || $DEFAULT_ENVIRONMENT_TYPE;
+	$entity_id = $opts{'i'} || $default_entity_id;
+	$sp_software_type = $opts{'s'} || $DEFAULT_SP_SOFTWARE_TYPE;
+	$web_server_software_type = $opts{'w'} || $DEFAULT_WEB_SERVER_SOFTWARE_TYPE;
+# Interactive mode.
+} else {
+
+	# Get environment type from the command line.
+	while (! &is_in($environment_type, @VALID_ENVIRONMENT_TYPES)) {
+		my $examples = '';
+		foreach (sort(@VALID_ENVIRONMENT_TYPES)) {
+			$examples .= "$_, ";
+		}
+		chop($examples);
+		chop($examples);
+		print("What is the environment type for your service provider (e.g $examples)?\n");
+		print("Press ENTER to use default value of '$DEFAULT_ENVIRONMENT_TYPE': ");
+		$environment_type = <STDIN>;
+		chomp($environment_type);
+		$environment_type = $environment_type || $DEFAULT_ENVIRONMENT_TYPE;
+	} # End while.
+	print("\n");
+
+	# Get web server software type from the command line.
+	while (! &is_in($web_server_software_type, @VALID_WEB_SERVER_SOFTWARE_TYPES)) {
+		my $examples = '';
+		foreach (sort(@VALID_WEB_SERVER_SOFTWARE_TYPES)) {
+			$examples .= "$_, ";
+		}
+		chop($examples);
+		chop($examples);
+		print("What type of web server software are you using to host your service provider (e.g $examples)?\n");
+		print("Press ENTER to use default value of '$DEFAULT_WEB_SERVER_SOFTWARE_TYPE': ");
+		$web_server_software_type = <STDIN>;
+		chomp($web_server_software_type);
+		$web_server_software_type = $web_server_software_type || $DEFAULT_WEB_SERVER_SOFTWARE_TYPE;
+	} # End while.
+	print("\n");
+
+	# Get service provider software type from the command line.
+	while (! &is_in($sp_software_type, @VALID_SP_SOFTWARE_TYPES)) {
+		my $examples = '';
+		foreach (sort(@VALID_SP_SOFTWARE_TYPES)) {
+			$examples .= "$_, ";
+		}
+		chop($examples);
+		chop($examples);
+		print("What type of software are you using for your service provider (e.g $examples)?\n");
+		print("Press ENTER to use default value of '$DEFAULT_SP_SOFTWARE_TYPE': ");
+		$sp_software_type = <STDIN>;
+		chomp($sp_software_type);
+		$sp_software_type = $sp_software_type || $DEFAULT_SP_SOFTWARE_TYPE;
+	} # End while.
+	print("\n");
+
+	# Get entity ID from the command line.
+	my $examples;
+	$examples = 'https://service.example.org/shibboleth';
+	print("What is the entity your service provider (e.g $examples)?\n");
+	print("Press ENTER to use default value of '$default_entity_id': ");
+	$entity_id = <STDIN>;
+	chomp($entity_id);
+	$entity_id = $entity_id || $default_entity_id;
+	print("\n");
+
+	# Get working directory from the command line.
+	$examples = $DEFAULT_WORKING_DIR;
+	print("What is the working directory you wish to use for configuring your service provider (e.g $examples)?\n");
+	print("Press ENTER to use default value of '$DEFAULT_WORKING_DIR': ");
+	$working_dir = <STDIN>;
+	chomp($working_dir);
+	$working_dir = $working_dir || $DEFAULT_WORKING_DIR;
+	print("\n");
+
+} # End if.
+
+#print("\$working_dir:$working_dir:\n");
+#print("\$environment_type:$environment_type:\n");
+#print("\$entity_id:$entity_id:\n");
+#print("\$sp_software_type:$sp_software_type:\n");
+#print("\$web_server_software_type:$web_server_software_type:\n");
+
 # If working directory does not exist, create it.
 if (! -e $working_dir) {
-	mkpath([$working_dir],1,0700);
+	mkpath([$working_dir], 1, 0700);
 } else {
 	my $command = "rm -rf $working_dir/*";
 	my $stdout = `$command`;
