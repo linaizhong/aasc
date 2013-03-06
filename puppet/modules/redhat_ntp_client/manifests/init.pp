@@ -1,13 +1,13 @@
 class redhat_ntp_client {
 
-	Package { "ntp":
+	package { "ntp":
 		ensure => installed,
 	} # End package.
 
-	Service { "ntpd":
+	service { "ntpd":
 		enabled => true,
 		running => true,
-		required => Package["ntp"];
+		require => Package["ntp"],
 	} # End service.
 
 } # End if.
