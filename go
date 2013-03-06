@@ -7,6 +7,7 @@ use File::Path;
 my $VERSION = '0.1';
 my @AUTHORS = ('Paul Stepowski');
 my $CONTACT = 'support@aaf.edu.au';
+my $SUCCESSFUL_INSTALL_INFO_FILE = 'success_info.txt';
 my $EXIT_SUCCESS = 0;;
 my $EXIT_FAILURE = 1;
 
@@ -362,6 +363,12 @@ if ($return != 0) {
 	exit($EXIT_FAILURE);
 } # End if.
 
+# Display information on how to register an SP.
+open(FP, "$SUCCESSFUL_INSTALL_INFO_FILE") || die("ERROR: Could not open '$SUCCESSFUL_INSTALL_INFO_FILE' for reading.");
+while(<FP>) {
+	print("$_");
+} # End while.
+close(FP);
 
 # Display program usage to standard error.
 sub usage {
