@@ -19,11 +19,11 @@ $WEB_SERVER_SOFTWARE_TYPE = 'apache'
 # Set tags based on environment.
 if ($ENVIRONMENT_TYPE == 'prod') {
 	$AAF_METADATA_CERTIFICATE_URL="https://ds.aaf.edu.au/distribution/metadata/aaf-metadata-cert.pem"
-	$AAF_METADATA_DOCUMENT_URL="https://ds.aaf.edu.au/distribution/metadata/metadata.aaf.signed.complete.xml"
+	$AAF_METADATA_DOCUMENT_URL="https://ds.aaf.edu.au/distribution/metadata/metadata.aaf.signed.minimal.xml"
 	$DISCOVERY_SERVICE_URL="https://ds.aaf.edu.au/discovery/DS"
 } elsif ($ENVIRONMENT_TYPE == 'test') {
 	$AAF_METADATA_CERTIFICATE_URL="https://ds.test.aaf.edu.au/distribution/metadata/aaf-metadata-cert.pem"
-	$AAF_METADATA_DOCUMENT_URL="https://ds.test.aaf.edu.au/distribution/metadata/metadata.aaf.signed.complete.xml"
+	$AAF_METADATA_DOCUMENT_URL="https://ds.test.aaf.edu.au/distribution/metadata/metadata.aaf.signed.minimal.xml"
 	$DISCOVERY_SERVICE_URL="https://ds.test.aaf.edu.au/discovery/DS"
 } else {
 	$AAF_METADATA_CERTIFICATE_URL="FIX_ME"
