@@ -1,20 +1,20 @@
 # The type of environment.
 # Currently supported options are: test, prod
-$ENVIRONMENT_TYPE = 'prod'
+$ENVIRONMENT_TYPE = ''
 
 # The entity ID of the service provider.
-$SERVICE_PROVIDER_ENTITY_ID = 'https://asdfsad/shib'
+$SERVICE_PROVIDER_ENTITY_ID = ''
 
 # The common name for use in the backend SSL certificate for the service provider.
-$SERVICE_PROVIDER_SSL_CERT_CN = 'asdfsad'
+$SERVICE_PROVIDER_SSL_CERT_CN = ''
 
 # The service provider software to install.
 # Currently supported options are: shibboleth
-$SERVICE_PROVIDER_SOFTWARE_TYPE = 'shibboleth'
+$SERVICE_PROVIDER_SOFTWARE_TYPE = ''
 
 # The web server to install the service provider software on.
 # Currently supported options are: apache
-$WEB_SERVER_SOFTWARE_TYPE = 'apache'
+$WEB_SERVER_SOFTWARE_TYPE = ''
 
 # Set tags based on environment.
 if ($ENVIRONMENT_TYPE == 'prod') {
