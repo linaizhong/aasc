@@ -1,7 +1,10 @@
 # Configuration applied to all UNIX-like servers.
 class unix_node {
 
-	include 'unix_ntp_client'
+	# Only install NTP client if the user has opted to.
+	if ($INSTALL_NTP_CLIENT == true) {
+		include 'unix_ntp_client'
+	}
 
 	# Linux specific configuration.
 	if ($kernel == 'Linux') {
