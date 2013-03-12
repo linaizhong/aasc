@@ -16,6 +16,10 @@ $SERVICE_PROVIDER_SOFTWARE_TYPE = ''
 # Currently supported options are: apache
 $WEB_SERVER_SOFTWARE_TYPE = ''
 
+# Install NTP client or not.
+# Currently support options are: true, false
+$INSTALL_NTP_CLIENT = 
+
 # Set tags based on environment.
 if ($ENVIRONMENT_TYPE == 'prod') {
 	$AAF_METADATA_CERTIFICATE_URL="https://ds.aaf.edu.au/distribution/metadata/aaf-metadata-cert.pem"

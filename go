@@ -47,6 +47,12 @@ my $DEFAULT_SP_SOFTWARE_TYPE = 'shibboleth';
 # The default web server software.
 my $DEFAULT_WEB_SERVER_SOFTWARE_TYPE = 'apache';
 
+# Location where the script will pull down configs to and run them (temporarily).
+my $DEFAULT_WORKING_DIR = '/tmp/automatesp';
+
+# The default response to whether we should install an NTP client or not.
+my $DEFAULT_INSTALL_NTP_CLIENT_RESPONSE = 'yes';
+
 # A list of valid values for the environment type.
 my @VALID_ENVIRONMENT_TYPES = ( 'prod', 'test' );
 
@@ -56,8 +62,8 @@ my @VALID_SP_SOFTWARE_TYPES = ( 'shibboleth' );
 # A list of valid values for the web server software type.
 my @VALID_WEB_SERVER_SOFTWARE_TYPES = ( 'apache' );
 
-# Location where the script will pull down configs to and run them (temporarily).
-my $DEFAULT_WORKING_DIR = '/tmp/automatesp';
+# A list of valid values for responding to a binary question.
+my @VALID_BINARY_RESPONSES = ('yes', 'no');
 
 my $SUCCESSFUL_INSTALL_INFO = <<END;
 Congratulations!
@@ -114,6 +120,7 @@ my $environment_type = '';
 my $entity_id = '';
 my $sp_software_type = '';
 my $web_server_software_type = '';
+my $install_ntp_client_response = '';
 
 # Check the script is being run as root.
 # TODO: Not portable to Windows!
@@ -215,20 +222,39 @@ if (exists($opts{'n'})) {
 
 	# Get working directory from the command line.
 	$examples = $DEFAULT_WORKING_DIR;
-	print("What is the working directory you wish to use for configuring your service provider (e.g $examples)?\n");
+	print("What is the temporary working directory you wish to use for configuring your service provider (e.g $examples)?\n");
 	print("Press ENTER to use default value of '$DEFAULT_WORKING_DIR': ");
 	$working_dir = <STDIN>;
 	chomp($working_dir);
 	$working_dir = $working_dir || $DEFAULT_WORKING_DIR;
 	print("\n");
 
+	# Confirm whether they want to install an NTP client or not.
+	while (! &is_in($install_ntp_client_response, @VALID_BINARY_RESPONSES)) {
+		my $examples = '';
+		foreach (sort(@VALID_BINARY_RESPONSES)) {
+			$examples .= "$_, ";
+		}
+		chop($examples);
+		chop($examples);
+		print("Would you like to install an NTP client to keep your server's time in sync ($examples)?\n");
+		print("Press ENTER to use default value of '$DEFAULT_INSTALL_NTP_CLIENT_RESPONSE': ");
+		$install_ntp_client_response = <STDIN>;
+		chomp($install_ntp_client_response);
+		$install_ntp_client_response = $install_ntp_client_response || $DEFAULT_INSTALL_NTP_CLIENT_RESPONSE;
+	} # End while.
+	print("\n");
+
 } # End if.
 
-#print("\$working_dir:$working_dir:\n");
-#print("\$environment_type:$environment_type:\n");
-#print("\$entity_id:$entity_id:\n");
-#print("\$sp_software_type:$sp_software_type:\n");
-#print("\$web_server_software_type:$web_server_software_type:\n");
+print("\$working_dir:$working_dir:\n");
+print("\$environment_type:$environment_type:\n");
+print("\$entity_id:$entity_id:\n");
+print("\$sp_software_type:$sp_software_type:\n");
+print("\$web_server_software_type:$web_server_software_type:\n");
+print("\$install_ntp_client_response:$install_ntp_client_response\n");
+
+#exit(0);
 
 # If working directory does not exist, create it.
 if (! -e $working_dir) {
@@ -366,6 +392,15 @@ for (my $i = 0; $i < scalar(@lines); $i++) {
 	$lines[$i] =~ s/^\$SERVICE_PROVIDER_SSL_CERT_CN = '.+$/\$SERVICE_PROVIDER_SSL_CERT_CN = '$ssl_cert_common_name'/;
 	$lines[$i] =~ s/^\$SERVICE_PROVIDER_SOFTWARE_TYPE = '.+$/\$SERVICE_PROVIDER_SOFTWARE_TYPE = '$sp_software_type'/;
 	$lines[$i] =~ s/^\$WEB_SERVER_SOFTWARE_TYPE = '.+$/\$WEB_SERVER_SOFTWARE_TYPE = '$web_server_software_type'/;
+	my $install_ntp_client;
+	if ($install_ntp_client_response eq 'yes')
+	{
+		$install_ntp_client = 'true';
+	} else {
+		$install_ntp_client = 'false';
+	}
+
+	$lines[$i] =~ s/^\$INSTALL_NTP_CLIENT = .+$/\$INSTALL_NTP_CLIENT = $install_ntp_client/;
 } # End for.
 
 # Pass in user specified parameters to Puppet manifests.
@@ -390,7 +425,7 @@ print("$stdout\n");
 
 # Clean up
 $command = "rm -rf $working_dir $puppet_dir";
-$stdout = `$command`;
+#$stdout = `$command`;
 $return = $?;
 if ($return != 0) {
 	printf(STDERR "ERROR: Could not clean up working directory '$working_dir' and/or Puppet directory '$puppet_dir'.\n");
