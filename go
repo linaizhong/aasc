@@ -4,10 +4,9 @@ use strict;
 use Getopt::Std;
 use File::Path;
 
-my $VERSION = '0.1';
+my $VERSION = '0.3';
 my @AUTHORS = ('Paul Stepowski');
 my $CONTACT = 'support@aaf.edu.au';
-my $SUCCESSFUL_INSTALL_INFO_FILE = 'success_info.txt';
 my $EXIT_SUCCESS = 0;;
 my $EXIT_FAILURE = 1;
 
@@ -56,6 +55,9 @@ my $DEFAULT_INSTALL_NTP_CLIENT_RESPONSE = 'yes';
 # The default response to whether we should install an NTP client or not.
 my $DEFAULT_INSTALL_PACKAGES_RESPONSE = 'yes';
 
+# The default response to the final confirmation to install prompt.
+my $DEFAULT_FINAL_CONFIRMATION_RESPONSE = 'yes';
+
 # A list of valid values for the environment type.
 my @VALID_ENVIRONMENT_TYPES = ( 'prod', 'test' );
 
@@ -67,6 +69,9 @@ my @VALID_WEB_SERVER_SOFTWARE_TYPES = ( 'apache' );
 
 # A list of valid values for responding to a binary question.
 my @VALID_BINARY_RESPONSES = ('yes', 'no');
+
+# A list of valid values for responding to final confirmation prompt.
+my @VALID_FINAL_CONFIRMATION_RESPONSES = ('yes', 'no', 'dryrun');
 
 my $SUCCESSFUL_INSTALL_INFO = <<END;
 Congratulations!
@@ -124,6 +129,8 @@ my $entity_id = '';
 my $sp_software_type = '';
 my $web_server_software_type = '';
 my $install_ntp_client_response = '';
+my $final_confirmation_response = '';
+my $dry_run_mode;
 
 # Check the script is being run as root.
 # TODO: Not portable to Windows!
@@ -134,12 +141,16 @@ if ($< != 0) {
 } # End if.
 
 # Parse command line arguments.
+# If unparsed command line arguements, then throw an error.
 my %opts;
-getopts("hnd:e:i:s:w:", \%opts);
+if (! getopts("hxd:e:i:s:w:", \%opts)) {
+	&HELP_MESSAGE();
+	exit($EXIT_SUCCESS);
+} # End if.
 
 # Show help screen and exit if specified on command line.
 if (exists($opts{'h'})) {
-	&usage();
+	&HELP_MESSAGE();
 	exit($EXIT_SUCCESS);
 } # End if.
 
@@ -155,13 +166,14 @@ foreach (1..80) { print("="); } print("\n");
 print("For support please contact $CONTACT.\n");
 foreach (1..80) { print("="); } print("\n");
 
-# Non-interactive mode.
-if (exists($opts{'n'})) {
-	$working_dir = $opts{'d'} || $DEFAULT_WORKING_DIR;
+# Non-interactive mode is activated if any command line arguements are passed.
+if (scalar(keys(%opts)) != 0) {
+	$working_dir = $opts{'t'} || $DEFAULT_WORKING_DIR;
 	$environment_type = $opts{'e'} || $DEFAULT_ENVIRONMENT_TYPE;
 	$entity_id = $opts{'i'} || $default_entity_id;
 	$sp_software_type = $opts{'s'} || $DEFAULT_SP_SOFTWARE_TYPE;
 	$web_server_software_type = $opts{'w'} || $DEFAULT_WEB_SERVER_SOFTWARE_TYPE;
+	$install_ntp_client_response = $opts{'x'} || $DEFAULT_INSTALL_NTP_CLIENT_RESPONSE;
 # Interactive mode.
 } else {
 
@@ -338,37 +350,38 @@ foreach my $required_package (@required_packages) {
 	} # End if.
 } # End foreach.
 
-# Display confirmation message to the user for package installtion.
-my $install_packages_reponse = '';
-while (! &is_in($install_packages_reponse, @VALID_BINARY_RESPONSES)) {
-	my $examples = '';
-	foreach (sort(@VALID_BINARY_RESPONSES)) {
-		$examples .= "$_, ";
-	}
-	chop($examples);
-	chop($examples);
-	my $packages = '';
-	foreach (sort(@packages_to_install)) {
-		$packages .= "$_, ";
-	} # End foreach.
-	chop($packages);
-	chop($packages);
-	print("The following packages are required to be installed '$packages'.  Would you like to continue ($examples)?\n");
-	print("Press ENTER to use default value of '$DEFAULT_INSTALL_PACKAGES_RESPONSE': ");
-	$install_packages_reponse = <STDIN>;
-	chomp($install_packages_reponse);
-	$install_packages_reponse = $install_packages_reponse || $DEFAULT_INSTALL_PACKAGES_RESPONSE;
-} # End while.
-print("\n");
+# If there are any packages to install, display confirmation message to the user for package installation.
+if (scalar(@packages_to_install) > 0) {
+	my $install_packages_response = '';
+	while (! &is_in($install_packages_response, @VALID_BINARY_RESPONSES)) {
+		my $examples = '';
+		foreach (sort(@VALID_BINARY_RESPONSES)) {
+			$examples .= "$_, ";
+		} # End foreach.
+		chop($examples);
+		chop($examples);
+		my $packages = '';
+		foreach (sort(@packages_to_install)) {
+			$packages .= "$_, ";
+		} # End foreach.
+		chop($packages);
+		chop($packages);
+		print("The following packages are required to be installed '$packages'.  Would you like to continue ($examples)?\n");
+		print("Press ENTER to use default value of '$DEFAULT_INSTALL_PACKAGES_RESPONSE': ");
+		$install_packages_response = <STDIN>;
+		chomp($install_packages_response);
+		$install_packages_response = $install_packages_response || $DEFAULT_INSTALL_PACKAGES_RESPONSE;
+	} # End while.
+	print("\n");
 
-# We can't continue unless the user confirms they want to install the prerequisite packages.
-if ($install_packages_reponse ne 'yes') {
-	printf("ERROR: Cannot continue unless the prerequisite packages are installed.  Exiting...\n");
-	exit($EXIT_FAILURE);
+	# We can't continue unless the user confirms they want to install the prerequisite packages.
+	if ($install_packages_response ne 'yes') {
+		printf("ERROR: Cannot continue unless the prerequisite packages are installed.  Exiting...\n");
+		exit($EXIT_FAILURE);
+	} # End if.
 } # End if.
 
-
-# . Install all required packages.
+# Install all required packages.
 my $install_package_command = ${$INSTALL_PACKAGE_COMMAND}{$operating_system_name}{$operating_system_release};
 foreach my $package_to_install (sort(@packages_to_install)) {
 	print("Installing required package '$package_to_install'.\n");
@@ -380,6 +393,38 @@ foreach my $package_to_install (sort(@packages_to_install)) {
 		exit($EXIT_FAILURE);
 	} # End if.
 } # End foreach.
+
+# Display final confirmation to proceed with the install.
+while (! &is_in($final_confirmation_response, @VALID_FINAL_CONFIRMATION_RESPONSES)) {
+	my $examples = '';
+	foreach (sort(@VALID_FINAL_CONFIRMATION_RESPONSES)) {
+		$examples .= "$_, ";
+	}
+	chop($examples);
+	chop($examples);
+	print("The script will now perform the following tasks:\n");
+	print("* Install and configure $web_server_software_type.\n");
+	print("* Install and configure $sp_software_type.\n");
+	if ($install_ntp_client_response eq 'yes') {
+		print("* Install and configure NTP client.\n");
+	} # End if.
+	print("Would you like to continue with the installation ($examples)?\n");
+	print("Press ENTER to use default value of '$DEFAULT_FINAL_CONFIRMATION_RESPONSE': ");
+	$final_confirmation_response = <STDIN>;
+	chomp($final_confirmation_response);
+	$final_confirmation_response = $final_confirmation_response || $DEFAULT_FINAL_CONFIRMATION_RESPONSE;
+} # End while.
+print("\n");
+
+# Process the user's final confirmation response.
+if ($final_confirmation_response eq 'no') {
+	print("You have chosen to stop the installation process.  Exiting...\n");
+	exit($EXIT_SUCCESS);
+} elsif ($final_confirmation_response eq 'yes') {
+	$dry_run_mode = 0;
+} else {
+	$dry_run_mode = 1;
+} # End if.
 
 # If working directory does not exist, create it.
 if (! -e $working_dir) {
@@ -445,8 +490,12 @@ close(FP);
 
 # Run puppet on downloaded manifests.
 my $puppet_dir = "$working_dir/automatesp/puppet";
-$command = "puppet apply --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
-#print("$command\n");
+if ($dry_run_mode) {
+	$command = "puppet apply --noop --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
+} else {
+	$command = "puppet apply --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
+} # End if.
+print("$command\n");
 $stdout = `$command`;
 $return = $?;
 if ($return != 0) {
@@ -469,19 +518,22 @@ if ($return != 0) {
 print($SUCCESSFUL_INSTALL_INFO);
 
 # Display program usage to standard error.
-sub usage {
-	printf(STDERR "$0 [ -n ] [ -h ] [ -d working_dir ] [ -e environment_type ] [ -i entity_id ] [ -s sp_software ] [ -w web_server_software ]\n\n");
+sub HELP_MESSAGE {
+	printf(STDERR "$0 [ -n ] [ -h ] [ -e environment_type ] [ -i entity_id ] [ -s sp_software ] [ -w web_server_software ] [ -t temp_working_dir ] [ -x ntp_client_install ]\n\n");
 	printf(STDERR "-h = show this help screen.\n");
-	printf(STDERR "-n = enable non-interactive mode.\n");
-	printf(STDERR "NOTE: No other flags are available unless non-interactive mode (-n) is enabled.\n");
 	printf(STDERR "If non-interactive mode is enbaled, the tool will build an SP with no further input from the user.\n");
-	printf(STDERR "working_dir - the directory where this script will copy files it needs to install the SP.\n");
 	printf(STDERR "environment_type - the environment type that this service provider will run under.\n");
 	printf(STDERR "entity_id - the entity ID for this service provider.\n");
 	printf(STDERR "sp_software - the service provider software type.\n");
 	printf(STDERR "web_server_software - the web server software type.\n");
+	printf(STDERR "temp_working_dir - the temporary directory where this script will copy files it needs to install the SP.\n");
+	printf(STDERR "ntp_client_install - install the ntp client or not.\n");
 } # End sub.
 
+# Display program version information and exit.
+sub VERSION_MESSAGE {
+	print "$0 version $VERSION\n";
+}
 
 # Return true if the item is in the list.
 sub is_in {
