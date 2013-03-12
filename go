@@ -400,7 +400,7 @@ for (my $i = 0; $i < scalar(@lines); $i++) {
 		$install_ntp_client = 'false';
 	}
 
-	$lines[$i] =~ s/^\$INSTALL_NTP_CLIENT = .+$/\$INSTALL_NTP_CLIENT = $install_ntp_client/;
+	$lines[$i] =~ s/^\$INSTALL_NTP_CLIENT =.+$/\$INSTALL_NTP_CLIENT = $install_ntp_client/;
 } # End for.
 
 # Pass in user specified parameters to Puppet manifests.
