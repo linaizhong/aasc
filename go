@@ -53,6 +53,9 @@ my $DEFAULT_WORKING_DIR = '/tmp/automatesp';
 # The default response to whether we should install an NTP client or not.
 my $DEFAULT_INSTALL_NTP_CLIENT_RESPONSE = 'yes';
 
+# The default response to whether we should install an NTP client or not.
+my $DEFAULT_INSTALL_PACKAGES_RESPONSE = 'yes';
+
 # A list of valid values for the environment type.
 my @VALID_ENVIRONMENT_TYPES = ( 'prod', 'test' );
 
@@ -256,15 +259,6 @@ print("\$install_ntp_client_response:$install_ntp_client_response\n");
 
 #exit(0);
 
-# If working directory does not exist, create it.
-if (! -e $working_dir) {
-	mkpath([$working_dir], 1, 0700);
-} else {
-	my $command = "rm -rf $working_dir/*";
-	my $stdout = `$command`;
-	my $return = $?;
-} # End if.
-
 # Check that environment type is valid.
 if (! &is_in($environment_type, @VALID_ENVIRONMENT_TYPES)) {
 	printf(STDERR "ERROR: Invalid environment type. Valid types are: ");
@@ -344,6 +338,36 @@ foreach my $required_package (@required_packages) {
 	} # End if.
 } # End foreach.
 
+# Display confirmation message to the user for package installtion.
+my $install_packages_reponse = '';
+while (! &is_in($install_packages_reponse, @VALID_BINARY_RESPONSES)) {
+	my $examples = '';
+	foreach (sort(@VALID_BINARY_RESPONSES)) {
+		$examples .= "$_, ";
+	}
+	chop($examples);
+	chop($examples);
+	my $packages = '';
+	foreach (sort(@packages_to_install)) {
+		$packages .= "$_, ";
+	} # End foreach.
+	chop($packages);
+	chop($packages);
+	print("The following packages are required to be installed '$packages'.  Would you like to continue ($examples)?\n");
+	print("Press ENTER to use default value of '$DEFAULT_INSTALL_PACKAGES_RESPONSE': ");
+	$install_packages_reponse = <STDIN>;
+	chomp($install_packages_reponse);
+	$install_packages_reponse = $install_packages_reponse || $DEFAULT_INSTALL_PACKAGES_RESPONSE;
+} # End while.
+print("\n");
+
+# We can't continue unless the user confirms they want to install the prerequisite packages.
+if ($install_packages_reponse ne 'yes') {
+	printf(STDERR, "ERROR: Cannot continue unless the prerequisite packages are installed.  Exiting...\n");
+	exit($EXIT_FAILURE);
+} # End if.
+
+
 # . Install all required packages.
 my $install_package_command = ${$INSTALL_PACKAGE_COMMAND}{$operating_system_name}{$operating_system_release};
 foreach my $package_to_install (sort(@packages_to_install)) {
@@ -356,6 +380,15 @@ foreach my $package_to_install (sort(@packages_to_install)) {
 		exit($EXIT_FAILURE);
 	} # End if.
 } # End foreach.
+
+# If working directory does not exist, create it.
+if (! -e $working_dir) {
+	mkpath([$working_dir], 1, 0700);
+} else {
+	my $command = "rm -rf $working_dir/*";
+	my $stdout = `$command`;
+	my $return = $?;
+} # End if.
 
 # Download Puppet manifests
 my $command;
