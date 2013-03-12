@@ -363,7 +363,7 @@ print("\n");
 
 # We can't continue unless the user confirms they want to install the prerequisite packages.
 if ($install_packages_reponse ne 'yes') {
-	printf(STDERR, "ERROR: Cannot continue unless the prerequisite packages are installed.  Exiting...\n");
+	printf("ERROR: Cannot continue unless the prerequisite packages are installed.  Exiting...\n");
 	exit($EXIT_FAILURE);
 } # End if.
 
