@@ -23,4 +23,7 @@ class service_provider_node {
 		include 'simplesaml_sp'
 	} # End if.
 
+	# Web server content.
+	include "sp_web_content"
+
 } # End class.
