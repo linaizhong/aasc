@@ -12,7 +12,7 @@ class sp_web_content {
 			owner   => root,
 			group   => root,
 			mode    => 644,
-			content => template("sp_web_content/index.html.erb"),
+			content => template("sp_web_content/index.html.erb");
 		"$DOCUMENT_ROOT/logo.jpg":
 			owner   => root,
 			group   => root,
