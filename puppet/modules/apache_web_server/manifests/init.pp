@@ -30,36 +30,6 @@ class apache_web_server {
 
 		} # End if
 
-		# Dummy web content.
-               	file {
-			"/var/www/html/index.html":
-                       		owner   => root,
-                       		group   => root,
-                       		mode    => 644,
-				source  => "puppet:///modules/apache_web_server/index.html";
-			"/var/www/html/index.php":
-                       		owner   => root,
-                       		group   => root,
-                       		mode    => 755,
-				source  => "puppet:///modules/apache_web_server/index.php";
-			"/var/www/html/secure":
-                       		owner   => root,
-                       		group   => root,
-                       		mode    => 755,
-				ensure  => directory;
-			"/var/www/html/secure/index.html":
-                       		owner   => root,
-                       		group   => root,
-                       		mode    => 644,
-				source  => "puppet:///modules/apache_web_server/index.html";
-			"/var/www/html/secure/index.php":
-                       		owner   => root,
-                       		group   => root,
-                       		mode    => 755,
-				require => Package['httpd'],
-				source  => "puppet:///modules/apache_web_server/index.php";
-               	} # End file.
-
 	} # End if.
 
 } # End class.

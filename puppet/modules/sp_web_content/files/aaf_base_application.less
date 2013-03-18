@@ -1,0 +1,401 @@
+@headColor: #495666;
+@headFontColor: #FFFFFF;
+@headFontColorHighlight: #DD7727;
+@navColor: #3D4754;
+@navFontColor: #FFFFFF;
+@footerBorder: #E1E1E1;
+@footerFontColor: #BBBBBB;
+@calmedHeader: #555555;
+@inlineLink: #000000;
+
+
+.rounded-top(@radius: 3px) {
+  border-top-left-radius: @radius;
+  border-top-right-radius: @radius;
+  -webkit-border-top-left-radius: @radius;
+  -webkit-border-top-right-radius: @radius;
+  -moz-border-radius-topleft: @radius;
+  -moz-border-radius-topright: @radius;
+}
+
+.rounded-bottom(@radius: 3px) {
+  border-bottom-left-radius: @radius;
+  border-bottom-right-radius: @radius;
+  -webkit-border-bottom-left-radius: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  -moz-border-radius-bottomleft: @radius;
+  -moz-border-radius-bottomright: @radius;
+}
+
+.rounded(@radius: 3px) {
+   -webkit-border-radius: @radius;
+   -moz-border-radius: @radius;
+   border-radius: @radius;
+}
+
+.zero {
+  margin: 0px;
+  padding: 0px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+/** 
+BOOTSTRAP OVERRIDES
+We do this here instead of customising Bootstrap LESS to
+make working with the Grails Bootstrap plugin easier.
+**/
+.hero-unit {
+  word-wrap: break-word;
+}
+
+
+nav {
+
+  .navbar {
+    margin-bottom: 0px;
+  }
+
+  .navbar .nav {
+    .zero;
+  }
+
+  .nav > li > a:hover {
+    .underline;
+    background-color: transparent;
+  }
+
+  .navbar-inner {
+    .rounded(0px);
+    .rounded-top (6px);
+    padding: 6px;
+    border: 0px;
+    background-color: @navColor;
+    background-image: none;
+    box-shadow: none;
+    min-height: 20px;
+    filter: none;
+  }
+
+  .dropdown-menu {
+    .rounded(0px);
+    .rounded-bottom(3px);
+    padding: 6px;
+    border: 0px;
+    background-color: @navColor;
+    background-image: none;
+    box-shadow: none;
+    min-height: 20px;
+  }
+
+  .dropdown-submenu > .dropdown-menu {
+    .rounded;
+    left: 100%;
+    top: 5px;
+    margin-left: 2px;
+  }
+
+  .dropdown-submenu > a:after {
+    .hidden;
+  }
+
+  .navbar .nav > li > .dropdown-menu::after,
+  .navbar .nav > li > .dropdown-menu::before {
+    .hidden;
+  }
+
+  .navbar .nav > li > a,
+  .nav-collapse .nav > li > a, 
+  .nav-collapse .dropdown-menu a {
+    .zero;
+    color: @navFontColor;
+    text-shadow: none;
+    padding: 8px 8px 8px;
+    font-weight: normal;
+  }
+
+  .dropdown-menu a ,
+  .nav-collapse .dropdown-menu a {
+    color: @navFontColor;
+    text-shadow: none;
+    
+    margin: 0;
+    font-weight: normal;
+  }
+
+  .dropdown-menu li > a:hover,
+  .dropdown-menu li > a:focus,
+  .dropdown-submenu:hover > a,
+  .nav-collapse .nav > li > a:hover, .nav-collapse .dropdown-menu a:hover {
+    .underline;
+    background-color: @navColor;
+    background-image: none;
+    font-weight: normal;
+    box-shadow: none;
+    color: @navFontColor;
+    filter: none;
+  }
+
+  .navbar .nav > li > a:hover,
+  .nav-collapse .nav > li > a:hover {
+    .underline;
+    background-color: @navColor;
+    background-image: none;
+    font-weight: normal;
+    box-shadow: none;
+    color: @navFontColor;
+  }
+
+  .navbar .nav li.dropdown.open > .dropdown-toggle,
+  .navbar .nav li.dropdown.active > .dropdown-toggle,
+  .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+    .underline;
+    background-color: @navColor;
+    font-weight: normal;
+    box-shadow: none;
+    color: @navFontColor;
+  }
+
+  .nav-list form {
+    .zero;
+    display: inline;
+
+    .btn {
+      .zero;
+    }
+  }
+}
+
+.dropdown-menu form {
+  .zero;
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+  padding: 0 9px;
+}
+
+/* ============ END BOOTSTRAP OVERRIDES */
+
+.CodeMirror-scroll {
+  padding: 4px;
+  margin-bottom: 9px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #555555;
+  background-color: white;
+  border: 1px solid #cccccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+ 
+.CodeMirror-scroll {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+ 
+.field_with_errors .CodeMirror-scroll {
+  border-color: #b94a48;
+}
+ 
+.CodeMirror-focused {
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+.content-spacer {
+  margin-top: 36px;
+}
+
+.dashboard-wow {
+  font-size: 3.5em;
+}
+
+.well a {
+  color: @inlineLink;
+}
+
+div.dataTables_length {
+  padding-left: 34px;
+  padding-top: 8px;
+}
+
+div.dataTables_length label {
+  float: left;
+  text-align: left;
+}
+
+div.dataTables_length select {
+  width: 75px;
+}
+
+div.dataTables_filter label {
+  float: right;
+  font-weight: bold;
+
+  input {
+    .rounded(10px);
+  }
+}
+
+div.dataTables_wrapper {
+  .zero;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+div.dataTables_length {
+  .zero;
+  float: left;
+}
+
+div.dataTables_paginate {
+  .zero;
+  float: right;
+}
+
+div.dataTables_info {
+  .zero;
+  font-weight: bold;
+  float: left;
+}
+
+div.dataTables_filter {
+  .zero;
+  float: right;
+}
+
+.row-sortable-top {
+  margin-bottom: 24px;
+}
+.row-sortable-bottom {
+  margin-top: 24px;
+}
+
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+  cursor: pointer;
+  *cursor: hand;
+}
+
+table.dataTable th:active {
+  outline: none;
+}
+
+table.table-borderless th {
+  border: 0px;
+}
+
+table.table-borderless td {
+  border: 0px;
+}
+
+.table th {
+  color: @calmedHeader;
+}
+
+.table th.sorting:hover {
+  .underline;
+}
+
+.table th.sorting_asc:hover {
+  .underline;
+}
+
+.table th.sorting_desc:hover {
+  .underline;
+}
+
+.table-modifiers {
+  margin-top: 48px;
+}
+
+ul.clean {
+  list-style: none;
+}
+
+header {  
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: @headColor;
+  color: @headFontColor;
+  
+  img {
+    float: left;
+    padding-bottom: 0px;
+    padding-left: 12px;
+    padding-right: 36px;
+  }
+
+  h1 {
+    .zero;
+    float: left;
+    font-size: 1.4em;
+    font-weight: normal;
+    padding-top: 6px;
+  }
+
+  h2 {
+    .zero;
+    float: right;
+    color: @headFontColorHighlight;
+    font-size: 1.4em;
+    font-weight: normal;
+    padding-top: 6px;
+    padding-right: 12px;
+  }
+}
+
+nav {
+  margin-bottom: 12px;
+  background-color: @headColor;
+}
+
+section {
+  h2 {
+    color: @calmedHeader;
+  }
+}
+
+
+footer {
+  .zero;
+  padding-top: 48px;
+  padding-bottom: 12px;
+
+  .container {
+    border-top: 1px solid @footerBorder;
+    word-wrap: break-word;
+    padding: 6px;
+    
+    font-size:0.9em;
+    color: @footerFontColor;
+    a {
+      color: @footerFontColor;
+    }
+  }
+}
