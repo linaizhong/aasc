@@ -487,9 +487,8 @@ my $successful_install_info = <<END;
 ================================================================================
 Congratulations
 ================================================================================
-
-Your automated service provider configuration was successful.  Please point your
-web browser at $sp_service_url for further instructions.
+Your service provider was successfully configured.  Please point your web
+browser at $sp_service_url for further instructions.
 
 If you experience any problems at any stage in the process, please contact:
 
