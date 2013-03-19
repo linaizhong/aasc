@@ -8,11 +8,11 @@ class sp_web_content {
 			group   => root,
 			mode    => 755,
 			ensure  => directory;
-		"$DOCUMENT_ROOT/index.html":
+		"$DOCUMENT_ROOT/index.php":
 			owner   => root,
 			group   => root,
 			mode    => 644,
-			content => template("sp_web_content/index.html.erb");
+			content => template("sp_web_content/index.php.erb");
 		"$DOCUMENT_ROOT/logo.jpg":
 			owner   => root,
 			group   => root,
@@ -62,7 +62,7 @@ class sp_web_content {
 			owner   => root,
 			group   => root,
 			mode    => 644,
-			source  => "puppet:///modules/sp_web_content/index.php";
+			source  => "puppet:///modules/sp_web_content/index_secure.php";
 	} # End file.
 
 } # End class.
