@@ -229,14 +229,12 @@ if (scalar(keys(%opts)) != 0) {
 
 } # End if.
 
-print("\$working_dir:$working_dir:\n");
-print("\$environment_type:$environment_type:\n");
-print("\$entity_id:$entity_id:\n");
-print("\$sp_software_type:$sp_software_type:\n");
-print("\$web_server_software_type:$web_server_software_type:\n");
-print("\$install_ntp_client_response:$install_ntp_client_response\n");
-
-#exit(0);
+&log_to_file("\working_dir:$working_dir:\n");
+&log_to_file("\environment_type:$environment_type:\n");
+&log_to_file("\entity_id:$entity_id:\n");
+&log_to_file("\sp_software_type:$sp_software_type:\n");
+&log_to_file("\web_server_software_type:$web_server_software_type:\n");
+&log_to_file("\install_ntp_client_response:$install_ntp_client_response\n");
 
 # Check that environment type is valid.
 if (! &is_in($environment_type, @VALID_ENVIRONMENT_TYPES)) {
