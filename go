@@ -73,29 +73,13 @@ my @VALID_BINARY_RESPONSES = ('yes', 'no');
 # A list of valid values for responding to final confirmation prompt.
 my @VALID_FINAL_CONFIRMATION_RESPONSES = ('yes', 'no', 'dryrun');
 
+my $sp_service_url = "adsfsafd";
+
 my $SUCCESSFUL_INSTALL_INFO = <<END;
 Congratulations!
-
-Your automated service provider configuration was successful.  The next step is
-to register your service provider in Federation Registry.  To do this, please
-follow the steps here:
-
-http://wiki.aaf.edu.au/tech-info/sp-install-guide#TOC-Federation-membership
-
-NOTE: Step 4 has been completed for you already.
-
-When creating your service provider record in Federation Registry, you will be 
-asked for your service provider's SSL certificate.  Please cut and paste the
-*entire* contents of the file:
-
-/etc/shibboleth/sp-cert.pem
-
-Into the online form.
-
-Once you have submitted the service provider creation online form, please allow
-some time for your submission to be approved and the metadata to propagate from
-Federation Registry to your service provider and to the identity providers in
-the federation.
+--------------------------------------------------------------------------------
+Your automated service provider configuration was successful.  Please point your
+web browser at $sp_service_url for further instructions.
 
 If you experience any problems at any stage in the process, please contact:
 
