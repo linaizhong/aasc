@@ -484,8 +484,9 @@ my $sp_service_url = $temp[0] . "//" . $temp[2] . "/";
 
 # Display information on how to register an SP.
 my $successful_install_info = <<END;
+================================================================================
 Congratulations
-===============
+================================================================================
 
 Your automated service provider configuration was successful.  Please point your
 web browser at $sp_service_url for further instructions.
