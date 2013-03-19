@@ -62,6 +62,7 @@ Create a new service provider record in <a href="<%= @FR_CREATE_SP_LINK %>">Fede
 <li>
 Enter the following, as requested by the form:
 </li>
+<br>
 <ul>
 <li>Display Name</li>
 <li>Description</li>
@@ -73,23 +74,26 @@ Enter the following, as requested by the form:
 <p>
 <li>
 Select the service provider software type:
+<p>
 <%= @SP_SOFTWARE_TYPE_STRING %>
+</pr>
 </li>
 </p>
 
 <p>
 <li>
 Paste in your SSL certificate.
-<br>
+<p>
 <pre>
 <?php include("<%= @SP_SSL_CERT_PATH %>"); ?>
 </pre>
+</p>
 </li>
 </p>
 
 <p>
 <li>
-Select your attributes.
+Select the attributes your service requires to be able to function.
 </li>
 </p>
 
@@ -101,9 +105,19 @@ Click submit.
 
 <p>
 <li>
-Wait for approval.
+Wait for your request to be approved by an AAF administrator.  You will by notified by email once your request has been approved.
 </li>
 </p>
+
+<p>
+<li>
+Wait for the federation metadata to update and flow through to your service provider, as well as the identity providers throughout the federation. 
+<p>
+NOTE: This may take up to x hours, depending on how individual sites have configured their identity provider.
+</p>
+</li>
+</p>
+
 
 </ol>
 
