@@ -41,6 +41,7 @@ if ($ENVIRONMENT_TYPE == 'prod') {
 # Set tags based on service provider software type.
 if ($SERVICE_PROVIDER_SOFTWARE_TYPE == 'shibboleth') {
 	$SP_SSL_CERT_PATH = "/etc/shibboleth/sp-cert.pem"
+	$SP_SOFTWARE_TYPE_STRING = "Shibboleth Service Provider (2.4.x)"
 } else {
 	# Unsupported sp software type.
 } # End if.

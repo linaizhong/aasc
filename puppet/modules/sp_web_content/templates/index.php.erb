@@ -56,41 +56,56 @@
 <li>
 Create a new service provider record in <a href="<%= @FR_CREATE_SP_LINK %>">Federation Registry</a>.
 </li>
+</p>
 
 <p>
 <li>
-Enter the following, as requested by the form;
+Enter the following, as requested by the form:
 </li>
-
 <ul>
 <li>Display Name</li>
 <li>Description</li>
 <li>Service URL</li>
 <li>Service Logo Url</li>
 </ul>
+</p>
 
+<p>
 <li>
-Select Shibboleth Service Provider (2.4.x)
+Select the service provider software type:
+<%= @SP_SOFTWARE_TYPE_STRING %>
 </li>
+</p>
+
+<p>
 <li>
 Paste in your SSL certificate.
-</li>
-<li>
-Select your attributes
-</li>
-<li>
-Hit submit
-</li>
-</ol>
-
-Wait for approval
-
-<hr>
-
-BOOM!
+<br>
 <pre>
 <?php include("<%= @SP_SSL_CERT_PATH %>"); ?>
 </pre>
+</li>
+</p>
+
+<p>
+<li>
+Select your attributes.
+</li>
+</p>
+
+<p>
+<li>
+Click submit.
+</li>
+</p>
+
+<p>
+<li>
+Wait for approval.
+</li>
+</p>
+
+</ol>
 
 <hr>
             <p>Page includes JQuery 1.7.2 and Modernizer 2.6.2.</p>
