@@ -9,6 +9,7 @@ my @AUTHORS = ('Paul Stepowski');
 my $CONTACT = 'support@aaf.edu.au';
 my $EXIT_SUCCESS = 0;;
 my $EXIT_FAILURE = 1;
+my $LOG_FILE = 'go.log';
 
 my $REQUIRED_PACKAGES = {
 	'CentOS' => {
@@ -72,24 +73,6 @@ my @VALID_BINARY_RESPONSES = ('yes', 'no');
 
 # A list of valid values for responding to final confirmation prompt.
 my @VALID_FINAL_CONFIRMATION_RESPONSES = ('yes', 'no', 'dryrun');
-
-my $sp_service_url = "adsfsafd";
-
-my $SUCCESSFUL_INSTALL_INFO = <<END;
-Congratulations!
---------------------------------------------------------------------------------
-Your automated service provider configuration was successful.  Please point your
-web browser at $sp_service_url for further instructions.
-
-If you experience any problems at any stage in the process, please contact:
-
-support\@aaf.edu.au
-
-Thanks,
-
-The AAF technical team.
-END
-
 
 # Get the hostname of the system to use in default values later.
 my $hostname = `hostname`;
@@ -424,8 +407,9 @@ my $command;
 my $stdout;
 my $return;
 # Clone from git.
-$command = "cd $working_dir && git clone git://github.com/ausaccessfed/automatesp.git";
+$command = "cd $working_dir && git clone git://github.com/ausaccessfed/automatesp.git 2>&1";
 $stdout = `$command`;
+&log_to_file($stdout);
 $return = $?;
 if ($return != 0) {
 	printf("ERROR: Error running command '$command'. Return code '$return'.\n");
@@ -498,8 +482,28 @@ if ($return != 0) {
 	exit($EXIT_FAILURE);
 } # End if.
 
+# Munge the service provider URL string.
+my @temp = split("/", $entity_id);
+my $sp_service_url = $temp[0] . "//" . $temp[2] . "/";
+
+my $successful_install_info = <<END;
+Congratulations
+===============
+
+Your automated service provider configuration was successful.  Please point your
+web browser at $sp_service_url for further instructions.
+
+If you experience any problems at any stage in the process, please contact:
+
+support\@aaf.edu.au
+
+Thanks,
+
+The AAF technical team.
+END
+
 # Display information on how to register an SP.
-print($SUCCESSFUL_INSTALL_INFO);
+print($successful_install_info);
 
 # Display program usage to standard error.
 sub HELP_MESSAGE {
@@ -528,5 +532,13 @@ sub is_in {
 		return 1 if ($_ eq $item);
 	} # End foreach.
 	return(0);
+} # End sub.
+
+# Log a string to the log file.
+sub log_to_file {
+	my $message = shift;
+	open(FP, ">> $LOG_FILE") || die("$!\n");
+	print(FP "$message");	
+	close(FP);
 } # End sub.
 
