@@ -463,19 +463,17 @@ if ($dry_run_mode) {
 } else {
 	$command = "puppet apply --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
 } # End if.
-print("$command\n");
+&log_to_file("$command\n");
 $stdout = `$command`;
+&log_to_file("$stdout\n");
 $return = $?;
 if ($return != 0) {
 	printf("ERROR: Puppet command failed.  Return code '$return'.\n");
 	exit($EXIT_FAILURE);
 } # End if.
 
-print("$stdout\n");
-
-# Clean up
+# Clean up temporary working directory.
 $command = "rm -rf $working_dir $puppet_dir";
-#$stdout = `$command`;
 $return = $?;
 if ($return != 0) {
 	printf(STDERR "ERROR: Could not clean up working directory '$working_dir' and/or Puppet directory '$puppet_dir'.\n");
@@ -486,6 +484,7 @@ if ($return != 0) {
 my @temp = split("/", $entity_id);
 my $sp_service_url = $temp[0] . "//" . $temp[2] . "/";
 
+# Display information on how to register an SP.
 my $successful_install_info = <<END;
 Congratulations
 ===============
@@ -502,7 +501,6 @@ Thanks,
 The AAF technical team.
 END
 
-# Display information on how to register an SP.
 print($successful_install_info);
 
 # Display program usage to standard error.
