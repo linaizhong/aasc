@@ -35,3 +35,10 @@ if ($ENVIRONMENT_TYPE == 'prod') {
 	$DISCOVERY_SERVICE_URL="FIX_ME"
 } # End if.
 
+# Set tags based on service provider software type.
+if ($SERVICE_PROVIDER_SOFTWARE_TYPE == 'shibboleth') {
+	$SP_SSL_CERT_PATH = "/etc/shibboleth/sp-cert.pem"
+} else {
+	# Unsupported sp software type.
+} # End if.
+
