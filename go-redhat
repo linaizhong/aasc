@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ `whoami` != "root" ]; then
+	echo "You must run this script as root."
+	exit 1
+fi
+
+# Make sure wget is installed.
+yum -y install wget
+
+# Download the bootstrapper script.
+wget --no-check-certificate https://raw.github.com/ausaccessfed/automatesp/master/go
+
+# Download the yum repository configuration.
+wget --no-check-certificate https://raw.github.com/ausaccessfed/automatesp/master/automatesp.repo
+
+# Set appropriate permissions to run the bootstrapper.
+chmod 755 automatesp.repo
+chmod 700 go
+
+# Configure yum.
+cp -p automatesp.repo /etc/yum.repos.d
+
+# Run the bootstrapper
+./go
