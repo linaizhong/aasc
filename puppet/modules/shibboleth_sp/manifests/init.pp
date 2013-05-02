@@ -62,7 +62,12 @@ class shibboleth_sp {
 				owner   => root,
 				group   => root,
 				mode    => 644,
-				content => template("shibboleth_sp/shibboleth2.xml.erb"),
+				content => template("shibboleth_sp/shibboleth2.xml.erb");
+			"/etc/shibboleth/attribute-map.xml":
+				owner   => root,
+				group   => root,
+				mode    => 644,
+				source  => "puppet:///modules/shibboleth_sp/attribute-map.xml",
 				# Enable once we are synching actively with Puppet, instead of one shot.
 				# notify  => Service["shibd"],
 				require => Package["shibboleth"];
