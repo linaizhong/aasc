@@ -393,7 +393,7 @@ if ($final_confirmation_response eq 'no') {
 
 # If working directory does not exist, create it.
 if (! -e $working_dir) {
-	mkpath([$working_dir], 1, 0700);
+	mkpath([$working_dir], 0, 0700);
 } else {
 	my $command = "rm -rf $working_dir/*";
 	my $stdout = `$command`;
