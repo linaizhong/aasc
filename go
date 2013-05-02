@@ -48,7 +48,7 @@ my $DEFAULT_SP_SOFTWARE_TYPE = 'shibboleth';
 my $DEFAULT_WEB_SERVER_SOFTWARE_TYPE = 'apache';
 
 # Location where the script will pull down configs to and run them (temporarily).
-my $DEFAULT_WORKING_DIR = '/tmp/automatesp';
+my $DEFAULT_WORKING_DIR = '/tmp/aasc';
 
 # The default response to whether we should install an NTP client or not.
 my $DEFAULT_INSTALL_NTP_CLIENT_RESPONSE = 'yes';
@@ -415,7 +415,7 @@ if ($return != 0) {
 } # End if.
 
 # Clean up git metadata files.
-$command = "cd $working_dir/automatesp && rm -rf .git"; 
+$command = "cd $working_dir/aasc && rm -rf .git"; 
 $stdout = `$command`;
 $return = $?;
 if ($return != 0) {
@@ -424,7 +424,7 @@ if ($return != 0) {
 } # End if.
 
 # Full path to the Puppet config to edit in place so we can feed user parameters into the Puppet configuration.
-my $puppet_manifest_config_file = "$working_dir/automatesp/puppet/manifests/tags/config.pp";
+my $puppet_manifest_config_file = "$working_dir/aasc/puppet/manifests/tags/config.pp";
 
 # Read Puppet manifest config file and munge.
 open(FP, $puppet_manifest_config_file) || die("ERROR: Could not open '$puppet_manifest_config_file' for reading.\n");
@@ -455,7 +455,7 @@ foreach (@lines) {
 close(FP);
 
 # Run puppet on downloaded manifests.
-my $puppet_dir = "$working_dir/automatesp/puppet";
+my $puppet_dir = "$working_dir/aasc/puppet";
 if ($dry_run_mode) {
 	$command = "puppet apply --noop --debug --verbose --color=false --vardir=$puppet_var_dir --modulepath=$puppet_dir/modules --libdir=$puppet_dir/lib $puppet_dir/manifests/site.pp";
 } else {
