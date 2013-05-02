@@ -46,12 +46,12 @@
         <div class="row">
           <div class="span12">
 
-<h1>Congratulations</h1>
-<br>
+            <h1>Congratulations</h1>
+            <br>
 
-<p>You have successfully authenticated to your brand new service provider via the Australian Access Federation.  This page is secure content.</p>
+            <p>You have successfully authenticated to your brand new service provider via the Australian Access Federation.  This page is secure content.</p>
 
-<p>The environment settings for this service provider are displayed below:</p>
+            <p>The environment settings for this service provider are displayed below:</p>
 
 <?php 
 
@@ -65,11 +65,7 @@ foreach ($_SERVER as $key => $value) {
 
 echo "</table>\n";
 
-print_r ( get_defined_vars () ) ;
-
 ?>
-
-
 
           </div>
         </div>
