@@ -9,7 +9,7 @@ fi
 yum -y install wget
 
 # Download the bootstrapper script.
-wget --no-check-certificate https://raw.github.com/aasc/automatesp/master/go
+wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/go
 
 # Download the yum repository configuration.
 wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/automatesp.repo
