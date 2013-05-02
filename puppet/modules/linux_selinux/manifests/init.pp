@@ -11,7 +11,7 @@ class linux_selinux {
 	exec { "disable-selinux";
 		cwd     => "/",
 		path    => ["/bin", "/usr/sbin"],
-		command => "setenforce 0 || echo -n"
+		command => "setenforce 0 || echo -n",
 	} # End exec.
 
 } # End class.
