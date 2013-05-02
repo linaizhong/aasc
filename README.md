@@ -3,11 +3,10 @@ AASC (AAF Automated Software Configurator)
 
 INSTALL
 
-<pre>
-wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/go-redhat
+As root:
 
-sh go-redhat
-</pre>
+    wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/go-redhat
+    sh go-redhat
 
 Currently the only supported platforms are:
 - RedHat Enterprise Linux 6
