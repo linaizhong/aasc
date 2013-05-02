@@ -53,6 +53,9 @@
 
             <p>The environment settings for this service provider are displayed below:</p>
 
+<br>
+<br>
+
 <?php 
 
 echo "<table>\n";
