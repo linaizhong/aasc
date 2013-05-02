@@ -4,4 +4,6 @@ class linux_node {
 		include 'redhat_node.pp'
 	} # End if.
 
+	include "linux_selinux"
+
 } # End class.
