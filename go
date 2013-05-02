@@ -405,7 +405,7 @@ my $command;
 my $stdout;
 my $return;
 # Clone from git.
-$command = "cd $working_dir && git clone git://github.com/ausaccessfed/automatesp.git 2>&1";
+$command = "cd $working_dir && git clone git://github.com/aasc/automatesp.git 2>&1";
 $stdout = `$command`;
 &log_to_file($stdout);
 $return = $?;
