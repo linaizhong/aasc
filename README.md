@@ -1,4 +1,11 @@
-automatesp
-==========
+AASC (AAF Automated Software Configurator)
+==========================================
 
-Automate SP deployment on supported platforms
+INSTALL
+
+wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/go-redhat
+sh go-redhat
+
+Currently the only supported platforms are:
+- RedHat Enterprise Linux 6
+- CentOS 6
