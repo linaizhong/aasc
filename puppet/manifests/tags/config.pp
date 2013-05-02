@@ -26,13 +26,13 @@ if ($ENVIRONMENT_TYPE == 'prod') {
 	$AAF_METADATA_CERTIFICATE_URL="https://$DISCOVER_SERVICE_HOST/distribution/metadata/aaf-metadata-cert.pem"
 	$AAF_METADATA_DOCUMENT_URL="https://$DISCOVER_SERVICE_HOST/distribution/metadata/metadata.aaf.signed.minimal.xml"
 	$DISCOVERY_SERVICE_URL="https://$DISCOVER_SERVICE_HOST/discovery/DS"
-	$FR_CREATE_SP_LINK = "https://manager.aaf.edu.au/federationregistry/membership/serviceprovider/create"
+	$FR_CREATE_SP_LINK = "https://manager.aaf.edu.au/federationregistry/registration/sp"
 } elsif ($ENVIRONMENT_TYPE == 'test') {
 	$DISCOVER_SERVICE_HOST="ds.test.aaf.edu.au"
 	$AAF_METADATA_CERTIFICATE_URL="https://$DISCOVER_SERVICE_HOST/distribution/metadata/aaf-metadata-cert.pem"
 	$AAF_METADATA_DOCUMENT_URL="https://$DISCOVER_SERVICE_HOST/distribution/metadata/metadata.aaf.signed.minimal.xml"
 	$DISCOVERY_SERVICE_URL="https://$DISCOVER_SERVICE_HOST/discovery/DS"
-	$FR_CREATE_SP_LINK = "https://manager.test.aaf.edu.au/federationregistry/membership/serviceprovider/create"
+	$FR_CREATE_SP_LINK = "https://manager.test.aaf.edu.au/federationregistry/registration/sp"
 } else {
 	$DISCOVER_SERVICE_HOST="FIX_ME"
 	$AAF_METADATA_CERTIFICATE_URL="FIX_ME"
