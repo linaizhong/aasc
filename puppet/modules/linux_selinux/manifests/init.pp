@@ -8,10 +8,10 @@ class linux_selinux {
 			source  => "puppet:///modules/linux_selinux/config";
 	} # End file.
 	
-	exec { "disable-selinux";
+	exec { "disable-selinux":
 		cwd     => "/",
 		path    => ["/bin", "/usr/sbin"],
-		command => "setenforce 0 || echo -n",
+		command => "setenforce 0 || echo -n"
 	} # End exec.
 
 } # End class.
