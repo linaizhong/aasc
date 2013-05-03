@@ -275,8 +275,12 @@ $ssl_cert_common_name =~ s/\/.+//g;
 # Check current operating environment.
 
 # Attempt to determine current operating system.
+# Are we running Red Hat
+if ( `cat /etc/redhat-release.rhel 2>/dev/null` =~ /^Red Hat Enterprise Linux Server release (\d+)\.\d+ \(\w+\)$/ ) {
+	$operating_system_name = 'Red Hat Enterprise Linux';
+	$operating_system_release = $1;
 # Are we running CentOS?
-if ( `cat /etc/redhat-release 2>/dev/null` =~ /^CentOS release (\d+)\.\d+ \(Final\)$/ ) {
+} elsif ( `cat /etc/redhat-release 2>/dev/null` =~ /^CentOS release (\d+)\.\d+ \(Final\)$/ ) {
 	$operating_system_name = 'CentOS';
 	$operating_system_release = $1;
 } # End if.
@@ -295,10 +299,11 @@ if ( $operating_system_release eq '' ) {
 # Exclude unsupported operating systems and releases.
 if ( $operating_system_name eq 'CentOS' and $operating_system_release eq '6' ) {
 	print("Operating system is $operating_system_name release $operating_system_release\n");
-} elsif ( $operating_system_name eq 'Red Hat' and $operating_system_release eq '6' ) {
+} elsif ( $operating_system_name eq 'Red Hat Enterprise Linux' and $operating_system_release eq '6' ) {
 	print("Operating system is $operating_system_name release $operating_system_release\n");
 } else {
 	printf(STDERR "ERROR: Operating system '$operating_system_name' and/or release '$operating_system_release' is not supported.\n");
+	exit($EXIT_FAILURE);
 } # End if. 
 
 # Check currently installed packages.
