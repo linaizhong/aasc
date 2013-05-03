@@ -9,17 +9,17 @@ fi
 yum -y install wget
 
 # Download the bootstrapper script.
-wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/go
+wget --no-check-certificate -O go https://raw.github.com/ausaccessfed/aasc/master/go
 
 # Download the yum repository configuration.
-wget --no-check-certificate https://raw.github.com/ausaccessfed/aasc/master/automatesp.repo
+wget --no-check-certificate -O aasc.repo https://raw.github.com/ausaccessfed/aasc/master/aasc.repo
 
 # Set appropriate permissions to run the bootstrapper.
-chmod 755 automatesp.repo
+chmod 755 aasc.repo
 chmod 700 go
 
 # Configure yum.
-cp -p automatesp.repo /etc/yum.repos.d
+cp -p aasc.repo /etc/yum.repos.d
 
 # Run the bootstrapper
 ./go
