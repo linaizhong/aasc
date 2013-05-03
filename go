@@ -276,7 +276,7 @@ $ssl_cert_common_name =~ s/\/.+//g;
 
 # Attempt to determine current operating system.
 # Are we running Red Hat
-if ( `cat /etc/redhat-release.rhel 2>/dev/null` =~ /^Red Hat Enterprise Linux Server release (\d+)\.\d+ \(\w+\)$/ ) {
+if ( `cat /etc/redhat-release 2>/dev/null` =~ /^Red Hat Enterprise Linux Server release (\d+)\.\d+ \(\w+\)$/ ) {
 	$operating_system_name = 'Red Hat Enterprise Linux';
 	$operating_system_release = $1;
 # Are we running CentOS?
