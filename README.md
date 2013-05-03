@@ -5,7 +5,7 @@ PRERQUISITES
 
 Currently the only supported platforms are:
 
-- RedHat Enterprise Linux 6
+- Red Hat Enterprise Linux Server 6
 - CentOS 6
 
 INSTALLATION
