@@ -1,7 +1,8 @@
 AASC (AAF Automated Software Configurator)
-==========================================
+------------------------------------------
 
-PRERQUISITES
+Prerequisites
+=============
 
 Currently the only supported platforms are:
 
@@ -12,7 +13,8 @@ Note:
 
 You must have yum configured to be able to download packages from the base and extras Red Hat/CentOS channels for the install script to function correctly.
 
-INSTALLATION
+Installation
+============
 
 1) Download the bootstrap script to your server.
 
@@ -32,7 +34,8 @@ As root:
 
     sh go-redhat
 
-SUPPORT
+Support
+=======
 
 AASC is currently beta software.  If you encounter any issues when using the software, or you have feature requests, please contact [support@aaf.edu.au](mailto:support@aaf.edu.au).  
 Our development team will respond to all requests, but be aware that priority will be given to support, bug fixes and enhancement to production software.
