@@ -6,12 +6,12 @@ Prerequisites
 
 Currently the only supported platforms are:
 
-- Red Hat Enterprise Linux Server 6
+- Red Hat Enterprise Linux 6
 - CentOS 6
 
 **Note:**
 
-If you are using RedHat Enterprise Linux 6, you need to enable the Optional channel for your host by logging into Red Hat Network (RHN) or your organisation's Satellite server.
+If you are using Red Hat Enterprise Linux 6, you need to enable the Optional channel for your host by logging into Red Hat Network (RHN) or your organisation's Satellite server.
 
 Installation
 ============
