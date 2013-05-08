@@ -11,7 +11,7 @@ Currently the only supported platforms are:
 
 **Note:**
 
-You must have yum configured to be able to download packages from the base and extras Red Hat/CentOS channels for the install script to function correctly.
+If you are using RedHat Enterprise Linux 6, you need to enable the Optional channel for your host by logging into Red Hat Network (RHN) or your organisation's Satellite server.
 
 Installation
 ============
