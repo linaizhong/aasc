@@ -14,7 +14,7 @@ class shibboleth_sp {
 		package { "shibboleth":
 			ensure  => installed,
 			require => File["/etc/yum.repos.d/security-shibboleth.repo"],
-			notify  => [Exec['generate-new-shib-ssl-cert'], Exec['initialise-aaf-metadata-document']],
+			notify  => Exec['generate-new-shib-ssl-cert'],
 		} # End package.
 
 		package { "wget":
@@ -41,11 +41,11 @@ class shibboleth_sp {
 
 		# Download AAF metadata document.
 		exec { "initialise-aaf-metadata-document":
+			onlyif      => "test ! -f /etc/shibboleth/aaf-metadata-cert.pem",
 			cwd         => "/etc/shibboleth",
 			path        => ["/bin", "/usr/bin"],
 			command     => "wget $AAF_METADATA_CERTIFICATE_URL -O /etc/shibboleth/aaf-metadata-cert.pem",
-			refreshonly => true,
-			require     => Package["wget"],
+			require     => [Package["wget"], Package["shibboleth"]],
 		} # End exec.
 
 		exec { "fix-key-permissions":
