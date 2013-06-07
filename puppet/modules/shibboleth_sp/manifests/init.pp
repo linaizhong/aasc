@@ -26,7 +26,7 @@ class shibboleth_sp {
 			enable  => true,
 			ensure  => running,
 			notify  => Service['httpd'],
-			require => Package["shibboleth"],
+			require => [Package["shibboleth"], Exec["initialise-aaf-metadata-document"]],
 		} # End if.
 
 		# Generate SSL cert.
