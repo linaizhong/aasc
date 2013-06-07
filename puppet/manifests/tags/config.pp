@@ -1,4 +1,3 @@
-SCOVER_SERVICE_HOST
 # Currently supported options are: test, prod
 $ENVIRONMENT_TYPE = ''
 
