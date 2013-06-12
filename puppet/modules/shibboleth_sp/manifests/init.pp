@@ -14,7 +14,7 @@ class shibboleth_sp {
 		package { "shibboleth":
 			ensure  => installed,
 			require => File["/etc/yum.repos.d/security-shibboleth.repo"],
-			notify  => Exec['generate-new-shib-ssl-cert'],
+#			notify  => Exec['generate-new-shib-ssl-cert'],
 		} # End package.
 
 		package { "wget":
@@ -26,11 +26,12 @@ class shibboleth_sp {
 			enable  => true,
 			ensure  => running,
 			notify  => Service['httpd'],
-			require => [Package["shibboleth"], Exec["initialise-aaf-metadata-document"]],
+			require => [Package["shibboleth"], Exec["initialise-aaf-metadata-document"], Exec["generate-new-shib-ssl-cert"], Exec["fix-key-permissions"]],
 		} # End if.
 
 		# Generate SSL cert.
 		exec { "generate-new-shib-ssl-cert":
+			unless      => "openssl x509 -noout -text -in sp-cert.pem | grep 'Subject: CN=$SERVICE_PROVIDER_ENTITY_ID",
 			cwd         => "/etc/shibboleth",
 			path        => ["/etc/shibboleth", "/bin", "/usr/bin"],
 			command     => "./keygen.sh -f -h $SERVICE_PROVIDER_SSL_CERT_CN -e $SERVICE_PROVIDER_ENTITY_ID",
