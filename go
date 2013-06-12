@@ -133,6 +133,40 @@ foreach (1..80) { print("="); } print("\n");
 print("For support please contact $CONTACT.\n");
 foreach (1..80) { print("="); } print("\n");
 
+# Check current operating environment.
+
+# Attempt to determine current operating system.
+# Are we running Red Hat
+if ( `cat /etc/redhat-release 2>/dev/null` =~ /^Red Hat Enterprise Linux Server release (\d+)\.\d+ \(\w+\)$/ ) {
+	$operating_system_name = 'Red Hat Enterprise Linux';
+	$operating_system_release = $1;
+# Are we running CentOS?
+} elsif ( `cat /etc/redhat-release 2>/dev/null` =~ /^CentOS release (\d+)\.\d+ \(Final\)$/ ) {
+	$operating_system_name = 'CentOS';
+	$operating_system_release = $1;
+} # End if.
+
+# Error checking for operating system name.
+if ( $operating_system_name eq '' ) {
+	printf(STDERR "ERROR: Unable to determine operating system.\n");
+	exit($EXIT_FAILURE);
+} # End if.
+
+# Error checking for operating system release.
+if ( $operating_system_release eq '' ) {
+	printf(STDERR "ERROR: Unable to determine operating system release.\n");
+} # End if.
+
+# Exclude unsupported operating systems and releases.
+if ( $operating_system_name eq 'CentOS' and $operating_system_release eq '6' ) {
+	print("Operating system is $operating_system_name release $operating_system_release\n");
+} elsif ( $operating_system_name eq 'Red Hat Enterprise Linux' and $operating_system_release eq '6' ) {
+	print("Operating system is $operating_system_name release $operating_system_release\n");
+} else {
+	printf(STDERR "ERROR: Operating system '$operating_system_name' and/or release '$operating_system_release' is not supported.\n");
+	exit($EXIT_FAILURE);
+} # End if. 
+
 # Non-interactive mode is activated if any command line arguements are passed.
 if (scalar(keys(%opts)) != 0) {
 	$working_dir = $opts{'t'} || $DEFAULT_WORKING_DIR;
@@ -271,40 +305,6 @@ my $ssl_cert_common_name = $entity_id;
 $ssl_cert_common_name =~ s/^http:\/\///;
 $ssl_cert_common_name =~ s/^https:\/\///;
 $ssl_cert_common_name =~ s/\/.+//g;
-
-# Check current operating environment.
-
-# Attempt to determine current operating system.
-# Are we running Red Hat
-if ( `cat /etc/redhat-release 2>/dev/null` =~ /^Red Hat Enterprise Linux Server release (\d+)\.\d+ \(\w+\)$/ ) {
-	$operating_system_name = 'Red Hat Enterprise Linux';
-	$operating_system_release = $1;
-# Are we running CentOS?
-} elsif ( `cat /etc/redhat-release 2>/dev/null` =~ /^CentOS release (\d+)\.\d+ \(Final\)$/ ) {
-	$operating_system_name = 'CentOS';
-	$operating_system_release = $1;
-} # End if.
-
-# Error checking for operating system name.
-if ( $operating_system_name eq '' ) {
-	printf(STDERR "ERROR: Unable to determine operating system.\n");
-	exit($EXIT_FAILURE);
-} # End if.
-
-# Error checking for operating system release.
-if ( $operating_system_release eq '' ) {
-	printf(STDERR "ERROR: Unable to determine operating system release.\n");
-} # End if.
-
-# Exclude unsupported operating systems and releases.
-if ( $operating_system_name eq 'CentOS' and $operating_system_release eq '6' ) {
-	print("Operating system is $operating_system_name release $operating_system_release\n");
-} elsif ( $operating_system_name eq 'Red Hat Enterprise Linux' and $operating_system_release eq '6' ) {
-	print("Operating system is $operating_system_name release $operating_system_release\n");
-} else {
-	printf(STDERR "ERROR: Operating system '$operating_system_name' and/or release '$operating_system_release' is not supported.\n");
-	exit($EXIT_FAILURE);
-} # End if. 
 
 # Check currently installed packages.
 my $check_package_command = ${$CHECK_PACKAGE_COMMAND}{$operating_system_name}{$operating_system_release};
