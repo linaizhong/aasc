@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -80,7 +79,7 @@ echo "</table>\n";
         <div class="row">
           <div class="span12">
             <p>
-              AAF Automated Service Provider Installer <strong>version 0.1</strong>
+              AAF Automated Service Provider Installer <strong>version 0.3</strong>
               <br>
               Developed for the <a href="http://www.aaf.edu.au">Australian Access Federation</a> by Paul Stepowski.
             </p>
