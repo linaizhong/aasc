@@ -1,7 +1,7 @@
 AASC (AAF Automated Software Configurator)
 ------------------------------------------
 
-AASC automates the process of installing and configuring a Shibboleth Service Provider into the Australia Access Federation.  The manual process for installing a Shibboleth Service Provider, which is closely approximated by AASC, can her found [here](http://wiki.aaf.edu.au/tech-info/sp-install-guide).
+AASC automates the process of installing and configuring a Shibboleth Service Provider into the Australia Access Federation.  The manual process for installing a Shibboleth Service Provider, which is closely approximated by AASC, can be found [here](http://wiki.aaf.edu.au/tech-info/sp-install-guide).
 
 **Note:**
 
